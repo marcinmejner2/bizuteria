@@ -10,9 +10,9 @@
       <a mat-list-item routerLink="/rings" (click)="drawer.close()">Pierścionki</a>
       <a mat-list-item routerLink="/earrings" (click)="drawer.close()">Kolczyki</a>
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/login" *ngIf="!(authService.isLoggedIn() | async)" (click)="drawer.close()">Logowanie</a>
-      <a mat-list-item routerLink="/admin" *ngIf="authService.isLoggedIn() | async" (click)="drawer.close()">Panel administratora</a>
-      <a mat-list-item *ngIf="authService.isLoggedIn() | async" (click)="logout(); drawer.close()">Wyloguj</a>
+      <a mat-list-item routerLink="/login" *ngIf="!(isLoggedIn$ | async)" (click)="drawer.close()">Logowanie</a>
+      <a mat-list-item routerLink="/admin" *ngIf="isLoggedIn$ | async" (click)="drawer.close()">Panel administratora</a>
+      <a mat-list-item *ngIf="isLoggedIn$ | async" (click)="logout(); drawer.close()">Wyloguj</a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -43,15 +43,18 @@
         <a mat-button routerLink="/earrings" routerLinkActive="active-link">
           <mat-icon>auto_awesome</mat-icon> Kolczyki
         </a>
+        <a mat-button routerLink="/admin" routerLinkActive="active-link" *ngIf="isLoggedIn$ | async">
+          <mat-icon>admin_panel_settings</mat-icon> Panel Admin
+        </a>
       </div>
       <span class="toolbar-spacer"></span>
-      <a mat-icon-button routerLink="/login" *ngIf="!(authService.isLoggedIn() | async)" matTooltip="Logowanie">
+      <a mat-icon-button routerLink="/login" *ngIf="!(isLoggedIn$ | async)" matTooltip="Logowanie">
         <mat-icon>login</mat-icon>
       </a>
-      <a mat-icon-button routerLink="/admin" *ngIf="authService.isLoggedIn() | async" matTooltip="Panel administratora">
+      <a mat-icon-button routerLink="/admin" *ngIf="isLoggedIn$ | async" matTooltip="Panel administratora">
         <mat-icon>admin_panel_settings</mat-icon>
       </a>
-      <button mat-icon-button *ngIf="authService.isLoggedIn() | async" matTooltip="Wyloguj" (click)="logout()">
+      <button mat-icon-button *ngIf="isLoggedIn$ | async" matTooltip="Wyloguj" (click)="logout()">
         <mat-icon>logout</mat-icon>
       </button>
     </mat-toolbar>
