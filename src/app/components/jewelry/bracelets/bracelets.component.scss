@@ -3,3 +3,103 @@
   opacity: 0.7;
 }
 
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  overflow: hidden;
+  max-width: 300px;
+  margin: 0 auto;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+.product-img-container {
+  position: relative;
+  height: 300px; // Zmieniono wysokość z 50px na 300px
+  overflow: hidden;
+}
+
+.product-img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain; // Zmieniono na contain zamiast cover, aby obrazek nie był przycinany
+  transition: transform 0.5s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.unavailable-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(220, 53, 69, 0.85);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+
+.product-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.product-price {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #343a40;
+}
+
+.card-body {
+  padding: 0.75rem;
+}
+
+.card-text {
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+// Poprawki dla responsywności
+@media (max-width: 576px) {
+  .product-img-container {
+    height: 50px;
+  }
+}
+
+// Poprawki dla ekranów wysokiej rozdzielczości
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1300px;
+  }
+
+  .row-cols-lg-3 > .col {
+    flex: 0 0 auto;
+    width: 25%; // 4 produkty w rzędzie na dużych ekranach
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1500px;
+  }
+
+  .row-cols-lg-3 > .col {
+    flex: 0 0 auto;
+    width: 20%; // 5 produktów w rzędzie na bardzo dużych ekranach
+  }
+}
+
+// Styl dla przycisku switch
+.form-check.form-switch {
+  border-top: 1px solid #dee2e6;
+  padding-top: 8px;
+  margin-top: 8px;
+}
