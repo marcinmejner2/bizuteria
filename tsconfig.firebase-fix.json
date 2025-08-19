@@ -1,0 +1,8 @@
+// Plik rozwiązujący problemy z typami w bibliotece @angular/fire
+// Ten plik mówi kompilatorowi TypeScript, aby ignorował błędy typów w tych pakietach
+{
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
+}
+
