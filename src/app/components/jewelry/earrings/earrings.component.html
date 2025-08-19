@@ -1,0 +1,38 @@
+<div class="container">
+  <h2 class="mb-4">Kolczyki</h2>
+
+  <div class="row mb-4">
+    <div class="col">
+      <p class="lead">Odkryj naszą kolekcję eleganckich kolczyków, które podkreślą Twoją urodę i dodadzą charakteru każdej stylizacji.</p>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Ładowanie...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && earrings.length === 0" class="alert alert-info">
+    Aktualnie brak kolczyków w naszej kolekcji. Zapraszamy ponownie wkrótce!
+  </div>
+
+  <div class="row">
+    <div *ngFor="let earring of earrings" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="earring.imageUrl" class="card-img-top" alt="{{ earring.name }}"
+            style="height: 250px; object-fit: cover;"
+            [ngClass]="{'grayscale': !earring.inStock}">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ earring.name }}
+            <span *ngIf="!earring.inStock" class="text-danger ms-2">Niedostępny</span>
+          </h5>
+          <p class="card-text">{{ earring.description }}</p>
+          <p class="card-text fw-bold">{{ earring.price | currency:'PLN ' }}</p>
+          <p *ngIf="!earring.inStock" class="text-danger">Produkt niedostępny</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+<div class="container">
+  <h2 class="mb-4">Panel Administratora</h2>
+
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'list'" (click)="activeTab = 'list'">Lista Biżuterii</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'add'" (click)="activeTab = 'add'">Dodaj Nową</a>
+    </li>
+  </ul>
+
+  <!-- Lista biżuterii -->
+  <div *ngIf="activeTab === 'list'">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Filtruj</span>
+      <select class="form-select" [(ngModel)]="categoryFilter">
+        <option value="">Wszystkie kategorie</option>
+        <option value="necklace">Naszyjniki</option>
+        <option value="bracelet">Bransoletki</option>
+        <option value="ring">Pierścionki</option>
+        <option value="earrings">Kolczyki</option>
+      </select>
+      <input type="text" class="form-control" placeholder="Szukaj..." [(ngModel)]="searchTerm">
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Zdjęcie</th>
+            <th>Nazwa</th>
+            <th>Kategoria</th>
+            <th>Cena</th>
+            <th>Dostępność</th>
+            <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of filteredJewelry">
+            <td>
+              <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ getCategoryName(item.category) }}</td>
+            <td>{{ item.price | currency:'PLN ' }}</td>
+            <td>
+              <span class="badge" [ngClass]="item.inStock ? 'bg-success' : 'bg-danger'">
+                {{ item.inStock ? 'Dostępny' : 'Niedostępny' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-info me-2" (click)="editItem(item)">Edytuj</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteItem(item)">Usuń</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="filteredJewelry.length === 0" class="alert alert-info">
+      Brak elementów do wyświetlenia.
+    </div>
+  </div>
+
+  <!-- Formularz dodawania/edycji -->
+  <div *ngIf="activeTab === 'add' || activeTab === 'edit'">
+    <h4>{{ activeTab === 'add' ? 'Dodaj nową biżuterię' : 'Edytuj biżuterię' }}</h4>
+
+    <form [formGroup]="jewelryForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nazwa</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+        <div *ngIf="jewelryForm.get('name')?.invalid && jewelryForm.get('name')?.touched" class="text-danger">
+          Nazwa jest wymagana
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Opis</label>
+        <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+        <div *ngIf="jewelryForm.get('description')?.invalid && jewelryForm.get('description')?.touched" class="text-danger">
+          Opis jest wymagany
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Kategoria</label>
+        <select class="form-select" id="category" formControlName="category">
+          <option value="">Wybierz kategorię</option>
+          <option value="necklace">Naszyjnik</option>
+          <option value="bracelet">Bransoletka</option>
+          <option value="ring">Pierścionek</option>
+          <option value="earrings">Kolczyki</option>
+        </select>
+        <div *ngIf="jewelryForm.get('category')?.invalid && jewelryForm.get('category')?.touched" class="text-danger">
+          Kategoria jest wymagana
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Cena</label>
+        <input type="number" class="form-control" id="price" formControlName="price">
+        <div *ngIf="jewelryForm.get('price')?.invalid && jewelryForm.get('price')?.touched" class="text-danger">
+          Cena jest wymagana i musi być większa od 0
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="imageUrl" class="form-label">URL zdjęcia</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="imageUrl" formControlName="imageUrl"
+            [placeholder]="selectedFile ? 'Zdjęcie zostanie przesłane z dysku' : 'Podaj URL zdjęcia'">
+          <span class="input-group-text">lub</span>
+          <button type="button" class="btn btn-outline-secondary" (click)="fileInput.click()">
+            Wybierz plik
+          </button>
+        </div>
+        <div *ngIf="selectedFile" class="mt-2">
+          <span class="badge bg-info">Wybrany plik: {{ selectedFile.name }}</span>
+          <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="clearSelectedFile()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
+        <div *ngIf="!selectedFile && jewelryForm.get('imageUrl')?.invalid && jewelryForm.get('imageUrl')?.touched" class="text-danger">
+          URL zdjęcia jest wymagany, jeśli nie przesyłasz pliku
+        </div>
+      </div>
+
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="inStock" formControlName="inStock">
+        <label class="form-check-label" for="inStock">Dostępny</label>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="jewelryForm.invalid || isSubmitting" (click)="handleSubmitClick($event)">
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+          {{ activeTab === 'add' ? 'Dodaj' : 'Zapisz zmiany' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Anuluj</button>
+      </div>
+    </form>
+  </div>
+</div>

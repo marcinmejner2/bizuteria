@@ -1,0 +1,38 @@
+<div class="container">
+  <h2 class="mb-4">Pierścionki</h2>
+
+  <div class="row mb-4">
+    <div class="col">
+      <p class="lead">Odkryj naszą kolekcję wyjątkowych pierścionków, idealnych na specjalne okazje i codzienne stylizacje.</p>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Ładowanie...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && rings.length === 0" class="alert alert-info">
+    Aktualnie brak pierścionków w naszej kolekcji. Zapraszamy ponownie wkrótce!
+  </div>
+
+  <div class="row">
+    <div *ngFor="let ring of rings" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="ring.imageUrl" class="card-img-top" alt="{{ ring.name }}"
+            style="height: 250px; object-fit: cover;"
+            [ngClass]="{'grayscale': !ring.inStock}">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ ring.name }}
+            <span *ngIf="!ring.inStock" class="text-danger ms-2">Niedostępny</span>
+          </h5>
+          <p class="card-text">{{ ring.description }}</p>
+          <p class="card-text fw-bold">{{ ring.price | currency:'PLN ' }}</p>
+          <p *ngIf="!ring.inStock" class="text-danger">Produkt niedostępny</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

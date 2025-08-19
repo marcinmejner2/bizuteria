@@ -1,0 +1,38 @@
+<div class="container">
+  <h2 class="mb-4">Bransoletki</h2>
+
+  <div class="row mb-4">
+    <div class="col">
+      <p class="lead">Odkryj naszą kolekcję stylowych bransoletek, które dodadzą elegancji Twoim nadgarstkom.</p>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Ładowanie...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && bracelets.length === 0" class="alert alert-info">
+    Aktualnie brak bransoletek w naszej kolekcji. Zapraszamy ponownie wkrótce!
+  </div>
+
+  <div class="row">
+    <div *ngFor="let bracelet of bracelets" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="bracelet.imageUrl" class="card-img-top" alt="{{ bracelet.name }}"
+            style="height: 250px; object-fit: cover;"
+            [ngClass]="{'grayscale': !bracelet.inStock}">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ bracelet.name }}
+            <span *ngIf="!bracelet.inStock" class="text-danger ms-2">Niedostępny</span>
+          </h5>
+          <p class="card-text">{{ bracelet.description }}</p>
+          <p class="card-text fw-bold">{{ bracelet.price | currency:'PLN ' }}</p>
+          <p *ngIf="!bracelet.inStock" class="text-danger">Produkt niedostępny</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

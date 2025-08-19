@@ -1,0 +1,108 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/jewelry-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-content h1 {
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+
+.hero-content p {
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.section-container {
+  margin-bottom: 60px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 300;
+  color: var(--primary-color);
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: var(--accent-color);
+  margin: 8px auto 0;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.category-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.featured-section {
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+  border-radius: 8px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.feature-item {
+  text-align: center;
+  padding: 24px;
+}
+
+.feature-item mat-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  margin-bottom: 16px;
+}
+
+.feature-item h3 {
+  margin-bottom: 12px;
+  font-weight: 400;
+  color: var(--primary-color);
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 16px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
