@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,10 +37,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { NecklacesComponent } from './components/jewelry/necklaces/necklaces.component';
-import { BraceletsComponent } from './components/jewelry/bracelets/bracelets.component';
-import { RingsComponent } from './components/jewelry/rings/rings.component';
-import { EarringsComponent } from './components/jewelry/earrings/earrings.component';
+import { JewelryCategoryComponent } from './components/jewelry/jewelry-category/jewelry-category.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
 
@@ -48,10 +45,7 @@ import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.
   declarations: [
     AppComponent,
     HomeComponent,
-    NecklacesComponent,
-    BraceletsComponent,
-    RingsComponent,
-    EarringsComponent,
+    JewelryCategoryComponent,
     LoginComponent,
     AdminPanelComponent
   ],
@@ -89,7 +83,9 @@ import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.
     MatChipsModule,
     MatDividerModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pl' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

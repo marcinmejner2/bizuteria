@@ -1,0 +1,86 @@
+<div class="category-container">
+  <!-- Header sekcji -->
+  <div class="category-header">
+    <div class="header-content">
+      <div class="header-text">
+        <h1 class="category-title">
+          <mat-icon class="category-icon">{{ getCategoryConfig().icon }}</mat-icon>
+          {{ getCategoryConfig().name }}
+        </h1>
+        <p class="category-description">{{ getCategoryConfig().description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista produktów -->
+  <div class="products-section">
+    <div class="products-container" *ngIf="jewelryItems.length > 0; else noProducts">
+      <div class="products-grid">
+        <mat-card class="product-card" *ngFor="let item of jewelryItems" [ngClass]="{'out-of-stock': !item.inStock}">
+          <!-- Obrazek produktu -->
+          <div class="product-image-container">
+            <img
+              [src]="item.imageUrl"
+              [alt]="item.name"
+              class="product-image"
+              [ngClass]="{'grayscale': !item.inStock}"
+              loading="lazy">
+
+            <!-- Badge dostępności -->
+            <div class="stock-badge" [ngClass]="item.inStock ? 'in-stock' : 'out-of-stock'">
+              {{ item.inStock ? 'Dostępny' : 'Niedostępny' }}
+            </div>
+          </div>
+
+          <!-- Informacje o produkcie -->
+          <mat-card-content class="product-info">
+            <h3 class="product-title">{{ item.name }}</h3>
+            <div *ngIf="!item.inStock" class="unavailable-notice">Niedostępny</div>
+            <p class="product-description">{{ item.description }}</p>
+            <div class="product-price">{{ item.price | currency:'PLN':'symbol':'1.2-2':'pl' }}</div>
+          </mat-card-content>
+
+          <!-- Panel administratora (tylko dla zalogowanych) -->
+          <mat-card-actions *ngIf="isLoggedIn$ | async" class="admin-controls">
+            <div class="admin-section">
+              <h4>Panel administratora</h4>
+
+              <div class="admin-actions">
+                <mat-slide-toggle
+                  [(ngModel)]="item.inStock"
+                  (change)="updateStock(item)"
+                  color="primary">
+                  {{ item.inStock ? 'Dostępny' : 'Niedostępny' }}
+                </mat-slide-toggle>
+
+                <button
+                  mat-raised-button
+                  color="warn"
+                  (click)="deleteItem(item)"
+                  class="delete-btn">
+                  <mat-icon>delete</mat-icon>
+                  Usuń
+                </button>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Stan braku produktów -->
+    <ng-template #noProducts>
+      <div class="no-products">
+        <mat-icon class="no-products-icon">{{ getCategoryConfig().icon }}</mat-icon>
+        <h3>Brak produktów w kategorii {{ getCategoryConfig().name }}</h3>
+        <p>W tej chwili nie mamy dostępnych produktów w tej kategorii.</p>
+        <div *ngIf="isLoggedIn$ | async">
+          <a mat-raised-button color="primary" routerLink="/admin">
+            <mat-icon>add</mat-icon>
+            Dodaj produkty w panelu administratora
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

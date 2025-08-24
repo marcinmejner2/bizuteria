@@ -1,0 +1,329 @@
+/* Generyczny komponent kategorii biżuterii - NAPRAWIONY LAYOUT */
+.category-container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* Header kategorii */
+.category-header {
+  background: linear-gradient(135deg, #673ab7 0%, #9c27b0 100%);
+  color: white;
+  padding: 60px 0 80px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .category-title {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .category-icon {
+      font-size: 3.5rem;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  .category-description {
+    font-size: 1.25rem;
+    margin: 0;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+}
+
+/* Sekcja produktów - NAPRAWIONY GRID */
+.products-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+.products-container {
+  width: 100%;
+}
+
+/* GŁÓWNY GRID - 3 kolumny na dużych ekranach */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  width: 100%;
+
+  /* Dla dużych ekranów - maksymalnie 3 kolumny */
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Dla średnich ekranów - 2 kolumny */
+  @media (min-width: 768px) and (max-width: 1199px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Dla małych ekranów - 1 kolumna */
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Karta produktu - NAPRAWIONE PROPORCJE */
+.product-card {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  &.out-of-stock {
+    opacity: 0.8;
+  }
+}
+
+/* Kontener obrazka - NAPRAWIONE PROPORCJE */
+.product-image-container {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Stała wysokość */
+  overflow: hidden;
+  flex-shrink: 0;
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Zapewnia prawidłowe proporcje */
+    object-position: center;
+    transition: transform 0.3s ease;
+    display: block;
+
+    &.grayscale {
+      filter: grayscale(100%);
+      opacity: 0.7;
+    }
+  }
+
+  &:hover .product-image:not(.grayscale) {
+    transform: scale(1.05);
+  }
+
+  .stock-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+
+    &.in-stock {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    &.out-of-stock {
+      background-color: #f44336;
+      color: white;
+    }
+  }
+}
+
+/* Informacje o produkcie */
+.product-info {
+  flex-grow: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  .product-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    color: #333;
+    line-height: 1.3;
+  }
+
+  .unavailable-notice {
+    color: #f44336;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .product-description {
+    color: #666;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #673ab7;
+    margin: 0;
+    margin-top: auto;
+  }
+}
+
+/* Panel administratora */
+.admin-controls {
+  border-top: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+  padding: 20px;
+  margin-top: auto;
+
+  .admin-section {
+    width: 100%;
+
+    h4 {
+      margin: 0 0 16px 0;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+
+      .delete-btn {
+        flex-shrink: 0;
+
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+/* Stan braku produktów */
+.no-products {
+  text-align: center;
+  padding: 80px 20px;
+  color: #666;
+
+  .no-products-icon {
+    font-size: 4rem;
+    width: auto;
+    height: auto;
+    margin-bottom: 24px;
+    color: #ccc;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin: 0 0 16px 0;
+    color: #333;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: 0 0 32px 0;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .category-header {
+    padding: 40px 0 60px;
+
+    .category-title {
+      font-size: 2.5rem;
+      flex-direction: column;
+      text-align: center;
+      gap: 12px;
+
+      .category-icon {
+        font-size: 2.5rem;
+      }
+    }
+
+    .category-description {
+      font-size: 1.125rem;
+      text-align: center;
+    }
+  }
+
+  .product-image-container {
+    height: 250px;
+  }
+
+  .admin-controls .admin-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    .delete-btn {
+      width: 100%;
+      margin-top: 12px;
+    }
+  }
+
+  .products-section {
+    padding: 0 15px 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-header {
+    .category-title {
+      font-size: 2rem;
+
+      .category-icon {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .product-info {
+    padding: 16px;
+  }
+
+  .products-section {
+    padding: 0 10px 40px;
+  }
+
+  .product-image-container {
+    height: 220px;
+  }
+}
