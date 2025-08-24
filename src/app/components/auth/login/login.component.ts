@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isLoading = false;
   errorMessage = '';
+  hidePassword = true; // Dodana właściwość do kontroli widoczności hasła
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,9 +34,9 @@ export class LoginComponent implements OnInit {
 
     this.isLoading = true;
     this.errorMessage = '';
-    
+
     const { email, password } = this.loginForm.value;
-    
+
     this.authService.login(email, password)
       .then(() => {
         this.router.navigate(['/admin']);

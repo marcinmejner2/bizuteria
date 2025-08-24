@@ -49,6 +49,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+
   // Naprawione filtrowanie z dodaną metodą getCategoryName
   applyFilters(): void {
     let filtered = [...this.jewelryList];

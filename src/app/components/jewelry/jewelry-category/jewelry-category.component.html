@@ -27,8 +27,8 @@
               loading="lazy">
 
             <!-- Badge dostępności -->
-            <div class="stock-badge" [ngClass]="item.inStock ? 'in-stock' : 'out-of-stock'">
-              {{ item.inStock ? 'Dostępny' : 'Niedostępny' }}
+            <div *ngIf="!item.inStock" class="stock-badge" [ngClass]="item.inStock ? 'in-stock' : 'out-of-stock'">
+              {{ item.inStock ? '' : 'Niedostępny' }}
             </div>
           </div>
 
@@ -40,6 +40,7 @@
             <div class="product-price">{{ item.price | currency:'PLN':'symbol':'1.2-2':'pl' }}</div>
           </mat-card-content>
 
+
           <!-- Panel administratora (tylko dla zalogowanych) -->
           <mat-card-actions *ngIf="isLoggedIn$ | async" class="admin-controls">
             <div class="admin-section">
@@ -50,7 +51,7 @@
                   [(ngModel)]="item.inStock"
                   (change)="updateStock(item)"
                   color="primary">
-                  {{ item.inStock ? 'Dostępny' : 'Niedostępny' }}
+                  {{ item.inStock ? '' : 'Niedostępny' }}
                 </mat-slide-toggle>
 
                 <button

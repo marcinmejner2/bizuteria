@@ -42,6 +42,7 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
     }
   };
 
+
   constructor(
     private route: ActivatedRoute,
     private jewelryService: JewelryService,

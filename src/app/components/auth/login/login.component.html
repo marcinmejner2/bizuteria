@@ -1,48 +1,76 @@
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <div class="card mt-5">
-      <div class="card-header bg-dark text-white">
-        <h4 class="mb-0">Panel logowania</h4>
-      </div>
-      <div class="card-body">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              formControlName="email"
-              placeholder="Wprowadź email">
-            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
-              Email jest wymagany i musi być poprawny
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Hasło</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              formControlName="password"
-              placeholder="Wprowadź hasło">
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
-              Hasło jest wymagane
-            </div>
-          </div>
-          <button
-            type="submit"
-            class="btn btn-primary w-100"
-            [disabled]="loginForm.invalid || isLoading">
-            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-            Zaloguj się
-          </button>
-        </form>
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-          {{ errorMessage }}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Panel logowania</mat-card-title>
+    </mat-card-header>
 
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="Wprowadź email"
+            autocomplete="email">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            Email jest wymagany
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Wprowadź poprawny adres email
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Hasło</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Wprowadź hasło"
+            autocomplete="current-password">
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Hasło jest wymagane
+          </mat-error>
+        </mat-form-field>
+
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          class="login-button full-width"
+          [disabled]="loginForm.invalid || isLoading">
+          <mat-spinner
+            *ngIf="isLoading"
+            diameter="20"
+            class="login-spinner">
+          </mat-spinner>
+          <span [class.loading-text]="isLoading">
+            {{ isLoading ? 'Logowanie...' : 'Zaloguj się' }}
+          </span>
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="errorMessage">
+      <div class="error-message">
+        <mat-icon color="warn">error</mat-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+</div>
