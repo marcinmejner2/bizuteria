@@ -1,0 +1,9 @@
+[
+  {
+    "origin": ["http://localhost:4200", "https://gosiabizuteria-b6757.firebaseapp.com"],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": ["Content-Type", "Access-Control-Allow-Origin", "x-goog-resumable"]
+  }
+]
+

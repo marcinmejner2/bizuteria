@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 // Material Imports
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -59,6 +60,7 @@ import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     // Firebase modules
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,

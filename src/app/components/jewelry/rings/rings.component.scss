@@ -7,6 +7,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
 .product-card-wrapper {
   width: 100%;
 }
@@ -15,7 +17,8 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 16px 0 0 0;
+  padding: 16px;
+  background-color: #ffffff;
 }
 
 .product-description {
@@ -25,13 +28,32 @@
   color: #616161;
 }
 
-  margin-bottom: 0;
+.product-title {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #212121;
+}
+
+.product-price {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #673ab7;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  color: #616161;
+}
+
 .product-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
   margin-bottom: 15px;
+}
+
 .btn-add {
   background-color: #fff;
   color: #673ab7;
@@ -45,10 +67,13 @@
     background-color: #673ab7;
     color: white;
   }
+
   &[disabled] {
     opacity: 0.5;
     cursor: not-allowed;
   }
+}
+
 .admin-controls {
   padding-top: 15px;
   border-top: 1px solid #e0e0e0;
@@ -62,6 +87,12 @@
   width: 100%;
 }
 
+.col {
+  width: 33.333% !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+
 /* Media queries dla różnych rozmiarów ekranu */
 @media (max-width: 992px) {
   .products-grid {
@@ -69,38 +100,11 @@
   }
 }
 
+@media (max-width: 576px) {
   .products-grid {
     grid-template-columns: 1fr;
-  margin-bottom: 12px;
-  font-size: 1.1rem;
-  color: #212121;
-}
+  }
 
-.product-price {
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: #673ab7;
-}
-
-.card-body {
-  padding: 16px;
-  background-color: #ffffff;
-}
-
-.card-text {
-  font-size: 0.9rem;
-  margin-bottom: 0.75rem;
-  color: #616161;
-}
-
-.col {
-  width: 33.333% !important; // Wymuszenie szerokości kolumny
-  padding: 10px !important;
-  box-sizing: border-box !important;
-}
-
-// Poprawki dla responsywności
-@media (max-width: 576px) {
   .product-img-container {
     height: 200px;
   }
@@ -110,28 +114,28 @@
 @media (min-width: 1200px) {
   .row-cols-lg-3 > .col {
     flex: 0 0 auto !important;
-    width: 33.333333% !important; // Dokładnie 3 produkty w rzędzie
+    width: 33.333333% !important;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .row-cols-md-2 > .col {
     flex: 0 0 auto !important;
-    width: 50% !important; // 2 produkty w rzędzie
+    width: 50% !important;
   }
 }
 
 @media (min-width: 576px) and (max-width: 991px) {
   .row-cols-sm-2 > .col {
     flex: 0 0 auto !important;
-    width: 50% !important; // 2 produkty w rzędzie
+    width: 50% !important;
   }
 }
 
 @media (max-width: 575px) {
   .row-cols-1 > .col {
     flex: 0 0 auto !important;
-    width: 100% !important; // 1 produkt w rzędzie
+    width: 100% !important;
   }
 }
 
