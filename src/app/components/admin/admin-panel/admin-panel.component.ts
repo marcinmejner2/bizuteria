@@ -9,7 +9,7 @@ import { Jewelry } from '../../../models/jewelry';
   styleUrls: ['./admin-panel.component.scss']
 })
 export class AdminPanelComponent implements OnInit {
-  activeTab: string = 'list';
+  selectedTabIndex: number = 0; // Dodane dla Material Tabs
   jewelryList: Jewelry[] = [];
   filteredJewelry: Jewelry[] = [];
   jewelryForm!: FormGroup;
@@ -31,7 +31,7 @@ export class AdminPanelComponent implements OnInit {
 
   initForm(item?: Jewelry): void {
     const urlValidators = this.selectedFile ? [] : [Validators.required];
-    
+
     this.jewelryForm = this.fb.group({
       name: [item?.name || '', Validators.required],
       description: [item?.description || '', Validators.required],
@@ -49,6 +49,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  // Naprawione filtrowanie z dodaną metodą getCategoryName
   applyFilters(): void {
     let filtered = [...this.jewelryList];
 
@@ -69,13 +70,20 @@ export class AdminPanelComponent implements OnInit {
     this.filteredJewelry = filtered;
   }
 
+  // Nowa metoda do czyszczenia filtrów
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.categoryFilter = '';
+    this.applyFilters();
+  }
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    
+
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
       console.log('Wybrano plik:', this.selectedFile.name);
-      
+
       // Zmień walidację pola URL - nie jest wymagane, gdy mamy plik
       this.jewelryForm.get('imageUrl')?.clearValidators();
       this.jewelryForm.get('imageUrl')?.updateValueAndValidity();
@@ -84,7 +92,7 @@ export class AdminPanelComponent implements OnInit {
 
   clearSelectedFile(): void {
     this.selectedFile = null;
-    
+
     // Przywróć walidację pola URL - jest wymagane, gdy nie mamy pliku
     this.jewelryForm.get('imageUrl')?.setValidators([Validators.required]);
     this.jewelryForm.get('imageUrl')?.updateValueAndValidity();
@@ -92,7 +100,7 @@ export class AdminPanelComponent implements OnInit {
 
   onSubmit(): void {
     console.log('onSubmit wywołana', this.jewelryForm.value, this.jewelryForm.valid);
-    
+
     if (this.jewelryForm.invalid && !this.selectedFile) {
       console.log('Formularz jest nieprawidłowy', this.jewelryForm.errors);
       return;
@@ -102,7 +110,7 @@ export class AdminPanelComponent implements OnInit {
     const formData = this.jewelryForm.value as Jewelry;
     console.log('Dane formularza do wysłania:', formData);
 
-    if (this.activeTab === 'edit' && this.editItemId) {
+    if (this.editItemId) {
       // Aktualizacja istniejącego przedmiotu
       if (this.selectedFile) {
         // Jeśli mamy nowy plik obrazka
@@ -115,9 +123,10 @@ export class AdminPanelComponent implements OnInit {
             });
           })
           .then(() => {
-            this.activeTab = 'list';
+            this.selectedTabIndex = 0; // Wróć do listy
             this.loadJewelry();
             this.selectedFile = null;
+            this.editItemId = null;
           })
           .catch(error => {
             console.error('Błąd podczas aktualizacji:', error);
@@ -130,8 +139,9 @@ export class AdminPanelComponent implements OnInit {
         // Aktualizacja bez zmiany obrazka
         this.jewelryService.updateJewelry(this.editItemId, formData)
           .then(() => {
-            this.activeTab = 'list';
+            this.selectedTabIndex = 0; // Wróć do listy
             this.loadJewelry();
+            this.editItemId = null;
           })
           .catch(error => {
             console.error('Błąd podczas aktualizacji:', error);
@@ -147,7 +157,7 @@ export class AdminPanelComponent implements OnInit {
       this.jewelryService.addJewelry(formData, this.selectedFile || undefined)
         .then((result) => {
           console.log('Przedmiot dodany pomyślnie', result);
-          this.activeTab = 'list';
+          this.selectedTabIndex = 0; // Wróć do listy
           this.loadJewelry();
           this.jewelryForm.reset();
           this.selectedFile = null;
@@ -189,10 +199,30 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
+  // Metoda do tłumaczenia nazw kategorii
+  getCategoryName(category: string): string {
+    const categoryNames: { [key: string]: string } = {
+      'necklace': 'Naszyjnik',
+      'bracelet': 'Bransoletka',
+      'ring': 'Pierścionek',
+      'earrings': 'Kolczyki'
+    };
+    return categoryNames[category] || category;
+  }
+
+  // Poprawiona metoda editItem z przełączaniem zakładek
   editItem(item: Jewelry): void {
-    this.activeTab = 'edit';
+    this.selectedTabIndex = 1; // Przełącz na zakładkę formularza
     this.editItemId = item.id || null;
     this.initForm(item);
+  }
+
+  // Poprawiona metoda cancelEdit
+  cancelEdit(): void {
+    this.selectedTabIndex = 0; // Wróć do listy
+    this.editItemId = null;
+    this.selectedFile = null;
+    this.initForm(); // Reset formularza
   }
 
   deleteItem(item: Jewelry): void {
@@ -205,21 +235,5 @@ export class AdminPanelComponent implements OnInit {
           .catch(error => console.error('Błąd podczas usuwania:', error));
       }
     }
-  }
-
-  cancelEdit(): void {
-    this.activeTab = 'list';
-    this.editItemId = null;
-    this.jewelryForm.reset();
-  }
-
-  getCategoryName(category: string): string {
-    const categories: { [key: string]: string } = {
-      'necklace': 'Naszyjnik',
-      'bracelet': 'Bransoletka',
-      'ring': 'Pierścionek',
-      'earrings': 'Kolczyki'
-    };
-    return categories[category] || category;
   }
 }

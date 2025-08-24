@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'; // Dodane
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -77,6 +78,7 @@ import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSlideToggleModule, // Dodane
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,

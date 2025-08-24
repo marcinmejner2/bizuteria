@@ -1,145 +1,218 @@
-<div class="container">
-  <h2 class="mb-4">Panel Administratora</h2>
+<!-- Panel Administratora z Material Design -->
+<div class="admin-container">
+  <!-- Header -->
+  <mat-card class="header-card">
+    <mat-card-header>
+      <mat-card-title class="main-title">
+        <mat-icon class="title-icon">admin_panel_settings</mat-icon>
+        Panel Administratora
+      </mat-card-title>
+      <mat-card-subtitle>Zarządzaj kolekcją biżuterii</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
 
-  <ul class="nav nav-tabs mb-4">
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'list'" (click)="activeTab = 'list'">Lista Biżuterii</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'add'" (click)="activeTab = 'add'">Dodaj Nową</a>
-    </li>
-  </ul>
+  <!-- Navigation Tabs -->
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="admin-tabs">
+    <mat-tab label="Lista Biżuterii">
+      <div class="tab-content">
+        <!-- Filtry -->
+        <mat-card class="filters-card">
+          <mat-card-content>
+            <div class="filters-row">
+              <mat-form-field appearance="outline" class="category-filter">
+                <mat-label>Kategoria</mat-label>
+                <mat-select [(ngModel)]="categoryFilter" (selectionChange)="applyFilters()">
+                  <mat-option value="">Wszystkie kategorie</mat-option>
+                  <mat-option value="necklace">Naszyjniki</mat-option>
+                  <mat-option value="bracelet">Bransoletki</mat-option>
+                  <mat-option value="ring">Pierścionki</mat-option>
+                  <mat-option value="earrings">Kolczyki</mat-option>
+                </mat-select>
+              </mat-form-field>
 
-  <!-- Lista biżuterii -->
-  <div *ngIf="activeTab === 'list'">
-    <div class="input-group mb-3">
-      <span class="input-group-text">Filtruj</span>
-      <select class="form-select" [(ngModel)]="categoryFilter">
-        <option value="">Wszystkie kategorie</option>
-        <option value="necklace">Naszyjniki</option>
-        <option value="bracelet">Bransoletki</option>
-        <option value="ring">Pierścionki</option>
-        <option value="earrings">Kolczyki</option>
-      </select>
-      <input type="text" class="form-control" placeholder="Szukaj..." [(ngModel)]="searchTerm">
-    </div>
+              <mat-form-field appearance="outline" class="search-filter">
+                <mat-label>Szukaj produktu</mat-label>
+                <input matInput [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Nazwa lub opis...">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
 
-    <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Zdjęcie</th>
-            <th>Nazwa</th>
-            <th>Kategoria</th>
-            <th>Cena</th>
-            <th>Dostępność</th>
-            <th>Akcje</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of filteredJewelry">
-            <td>
-              <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
-            </td>
-            <td>{{ item.name }}</td>
-            <td>{{ getCategoryName(item.category) }}</td>
-            <td>{{ item.price | currency:'PLN ' }}</td>
-            <td>
-              <span class="badge" [ngClass]="item.inStock ? 'bg-success' : 'bg-danger'">
-                {{ item.inStock ? 'Dostępny' : 'Niedostępny' }}
-              </span>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-info me-2" (click)="editItem(item)">Edytuj</button>
-              <button class="btn btn-sm btn-danger" (click)="deleteItem(item)">Usuń</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              <button mat-raised-button color="primary" (click)="clearFilters()" class="clear-filters-btn">
+                <mat-icon>clear</mat-icon>
+                Wyczyść filtry
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
 
-    <div *ngIf="filteredJewelry.length === 0" class="alert alert-info">
-      Brak elementów do wyświetlenia.
-    </div>
-  </div>
+        <!-- Lista produktów -->
+        <mat-card class="products-list-card">
+          <mat-card-content>
+            <div class="products-header">
+              <h3>Lista produktów</h3>
+              <span class="products-count">{{ filteredJewelry.length }} produktów</span>
+            </div>
 
-  <!-- Formularz dodawania/edycji -->
-  <div *ngIf="activeTab === 'add' || activeTab === 'edit'">
-    <h4>{{ activeTab === 'add' ? 'Dodaj nową biżuterię' : 'Edytuj biżuterię' }}</h4>
+            <div *ngIf="filteredJewelry.length > 0; else noProducts" class="products-grid">
+              <mat-card class="product-item" *ngFor="let item of filteredJewelry">
+                <div class="product-image">
+                  <img [src]="item.imageUrl" [alt]="item.name" class="product-img">
+                  <div class="stock-badge" [ngClass]="item.inStock ? 'in-stock' : 'out-of-stock'">
+                    {{ item.inStock ? 'Dostępny' : 'Niedostępny' }}
+                  </div>
+                </div>
 
-    <form [formGroup]="jewelryForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nazwa</label>
-        <input type="text" class="form-control" id="name" formControlName="name">
-        <div *ngIf="jewelryForm.get('name')?.invalid && jewelryForm.get('name')?.touched" class="text-danger">
-          Nazwa jest wymagana
-        </div>
+                <mat-card-content class="product-info">
+                  <h4 class="product-name">{{ item.name }}</h4>
+                  <p class="product-category">{{ getCategoryName(item.category) }}</p>
+                  <p class="product-price">{{ item.price | currency:'PLN ' }}</p>
+                  <p class="product-description">{{ item.description | slice:0:100 }}{{ item.description.length > 100 ? '...' : '' }}</p>
+                </mat-card-content>
+
+                <mat-card-actions class="product-actions">
+                  <button mat-raised-button color="primary" (click)="editItem(item)">
+                    <mat-icon>edit</mat-icon>
+                    Edytuj
+                  </button>
+                  <button mat-raised-button color="warn" (click)="deleteItem(item)">
+                    <mat-icon>delete</mat-icon>
+                    Usuń
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            </div>
+
+            <ng-template #noProducts>
+              <div class="no-products">
+                <mat-icon class="no-products-icon">inventory_2</mat-icon>
+                <h3>Brak produktów</h3>
+                <p>Nie znaleziono produktów spełniających kryteria wyszukiwania.</p>
+                <button mat-raised-button color="primary" (click)="selectedTabIndex = 1">
+                  <mat-icon>add</mat-icon>
+                  Dodaj pierwszy produkt
+                </button>
+              </div>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
       </div>
+    </mat-tab>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Opis</label>
-        <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
-        <div *ngIf="jewelryForm.get('description')?.invalid && jewelryForm.get('description')?.touched" class="text-danger">
-          Opis jest wymagany
-        </div>
-      </div>
+    <mat-tab label="Dodaj Nowy Produkt">
+      <div class="tab-content">
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>{{ editItemId ? 'Edytuj biżuterię' : 'Dodaj nową biżuterię' }}</mat-card-title>
+          </mat-card-header>
 
-      <div class="mb-3">
-        <label for="category" class="form-label">Kategoria</label>
-        <select class="form-select" id="category" formControlName="category">
-          <option value="">Wybierz kategorię</option>
-          <option value="necklace">Naszyjnik</option>
-          <option value="bracelet">Bransoletka</option>
-          <option value="ring">Pierścionek</option>
-          <option value="earrings">Kolczyki</option>
-        </select>
-        <div *ngIf="jewelryForm.get('category')?.invalid && jewelryForm.get('category')?.touched" class="text-danger">
-          Kategoria jest wymagana
-        </div>
-      </div>
+          <mat-card-content>
+            <form [formGroup]="jewelryForm" (ngSubmit)="onSubmit()" class="jewelry-form">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Nazwa produktu</mat-label>
+                  <input matInput formControlName="name" placeholder="Np. Elegancki naszyjnik">
+                  <mat-error *ngIf="jewelryForm.get('name')?.hasError('required')">
+                    Nazwa jest wymagana
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-      <div class="mb-3">
-        <label for="price" class="form-label">Cena</label>
-        <input type="number" class="form-control" id="price" formControlName="price">
-        <div *ngIf="jewelryForm.get('price')?.invalid && jewelryForm.get('price')?.touched" class="text-danger">
-          Cena jest wymagana i musi być większa od 0
-        </div>
-      </div>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Opis produktu</mat-label>
+                  <textarea matInput formControlName="description" rows="4" placeholder="Opisz szczegóły produktu..."></textarea>
+                  <mat-error *ngIf="jewelryForm.get('description')?.hasError('required')">
+                    Opis jest wymagany
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-      <div class="mb-3">
-        <label for="imageUrl" class="form-label">URL zdjęcia</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="imageUrl" formControlName="imageUrl"
-            [placeholder]="selectedFile ? 'Zdjęcie zostanie przesłane z dysku' : 'Podaj URL zdjęcia'">
-          <span class="input-group-text">lub</span>
-          <button type="button" class="btn btn-outline-secondary" (click)="fileInput.click()">
-            Wybierz plik
-          </button>
-        </div>
-        <div *ngIf="selectedFile" class="mt-2">
-          <span class="badge bg-info">Wybrany plik: {{ selectedFile.name }}</span>
-          <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="clearSelectedFile()">
-            <span>&times;</span>
-          </button>
-        </div>
-        <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
-        <div *ngIf="!selectedFile && jewelryForm.get('imageUrl')?.invalid && jewelryForm.get('imageUrl')?.touched" class="text-danger">
-          URL zdjęcia jest wymagany, jeśli nie przesyłasz pliku
-        </div>
-      </div>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Kategoria</mat-label>
+                  <mat-select formControlName="category">
+                    <mat-option value="">Wybierz kategorię</mat-option>
+                    <mat-option value="necklace">Naszyjnik</mat-option>
+                    <mat-option value="bracelet">Bransoletka</mat-option>
+                    <mat-option value="ring">Pierścionek</mat-option>
+                    <mat-option value="earrings">Kolczyki</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="jewelryForm.get('category')?.hasError('required')">
+                    Kategoria jest wymagana
+                  </mat-error>
+                </mat-form-field>
 
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="inStock" formControlName="inStock">
-        <label class="form-check-label" for="inStock">Dostępny</label>
-      </div>
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Cena</mat-label>
+                  <input matInput type="number" formControlName="price" placeholder="0.00">
+                  <span matSuffix>PLN</span>
+                  <mat-error *ngIf="jewelryForm.get('price')?.hasError('required')">
+                    Cena jest wymagana
+                  </mat-error>
+                  <mat-error *ngIf="jewelryForm.get('price')?.hasError('min')">
+                    Cena musi być większa od 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-      <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary" [disabled]="jewelryForm.invalid || isSubmitting" (click)="handleSubmitClick($event)">
-          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
-          {{ activeTab === 'add' ? 'Dodaj' : 'Zapisz zmiany' }}
-        </button>
-        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Anuluj</button>
+              <div class="form-row">
+                <div class="image-upload-section">
+                  <h4>Zdjęcie produktu</h4>
+
+                  <div class="upload-options">
+                    <mat-form-field appearance="outline" class="url-input" *ngIf="!selectedFile">
+                      <mat-label>URL zdjęcia</mat-label>
+                      <input matInput formControlName="imageUrl" placeholder="https://example.com/image.jpg">
+                      <mat-error *ngIf="!selectedFile && jewelryForm.get('imageUrl')?.hasError('required')">
+                        URL zdjęcia jest wymagany, jeśli nie przesyłasz pliku
+                      </mat-error>
+                    </mat-form-field>
+
+                    <div class="file-upload" [class.has-file]="selectedFile">
+                      <button type="button" mat-raised-button color="accent" (click)="fileInput.click()" class="upload-btn">
+                        <mat-icon>cloud_upload</mat-icon>
+                        {{ selectedFile ? 'Zmień plik' : 'Prześlij plik' }}
+                      </button>
+
+                      <div *ngIf="selectedFile" class="selected-file">
+                        <mat-chip-set>
+                          <mat-chip selected>
+                            <mat-icon matChipAvatar>image</mat-icon>
+                            {{ selectedFile.name }}
+                            <button matChipRemove (click)="clearSelectedFile()">
+                              <mat-icon>cancel</mat-icon>
+                            </button>
+                          </mat-chip>
+                        </mat-chip-set>
+                      </div>
+                    </div>
+                  </div>
+
+                  <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <mat-slide-toggle formControlName="inStock" class="stock-toggle">
+                  Produkt dostępny w magazynie
+                </mat-slide-toggle>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" mat-stroked-button (click)="cancelEdit()" [disabled]="isSubmitting">
+                  <mat-icon>cancel</mat-icon>
+                  Anuluj
+                </button>
+
+                <button type="submit" mat-raised-button color="primary" [disabled]="jewelryForm.invalid || isSubmitting">
+                  <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
+                  <mat-icon *ngIf="!isSubmitting">{{ editItemId ? 'save' : 'add' }}</mat-icon>
+                  {{ editItemId ? 'Zapisz zmiany' : 'Dodaj produkt' }}
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
       </div>
-    </form>
-  </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

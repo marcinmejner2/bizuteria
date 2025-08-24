@@ -29,22 +29,28 @@
       <span class="toolbar-spacer"></span>
       <div class="desktop-navigation">
         <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
-          <mat-icon>home</mat-icon> Strona główna
+          <mat-icon>home</mat-icon>
+          <span>Strona główna</span>
         </a>
         <a mat-button routerLink="/necklaces" routerLinkActive="active-link">
-          <mat-icon>diamond</mat-icon> Naszyjniki
+          <mat-icon>diamond</mat-icon>
+          <span>Naszyjniki</span>
         </a>
         <a mat-button routerLink="/bracelets" routerLinkActive="active-link">
-          <mat-icon>watch</mat-icon> Bransoletki
+          <mat-icon>watch</mat-icon>
+          <span>Bransoletki</span>
         </a>
         <a mat-button routerLink="/rings" routerLinkActive="active-link">
-          <mat-icon>circle</mat-icon> Pierścionki
+          <mat-icon>circle</mat-icon>
+          <span>Pierścionki</span>
         </a>
         <a mat-button routerLink="/earrings" routerLinkActive="active-link">
-          <mat-icon>auto_awesome</mat-icon> Kolczyki
+          <mat-icon>auto_awesome</mat-icon>
+          <span>Kolczyki</span>
         </a>
         <a mat-button routerLink="/admin" routerLinkActive="active-link" *ngIf="isLoggedIn$ | async">
-          <mat-icon>admin_panel_settings</mat-icon> Panel Admin
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Panel Admin</span>
         </a>
       </div>
       <span class="toolbar-spacer"></span>
