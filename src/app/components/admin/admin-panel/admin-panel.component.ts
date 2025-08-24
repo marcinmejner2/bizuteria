@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { JewelryService } from '../../../services/jewelry.service';
 import { Jewelry } from '../../../models/jewelry';
 
@@ -21,12 +22,31 @@ export class AdminPanelComponent implements OnInit {
 
   constructor(
     private jewelryService: JewelryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute // Dodany ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.loadJewelry();
+
+    // Obsługa parametru editId z URL
+    this.route.queryParams.subscribe(params => {
+      const editId = params['editId'];
+      if (editId) {
+        // Znajdź przedmiot do edycji i przełącz na zakładkę formularza
+        this.jewelryService.getJewelryById(editId).subscribe({
+          next: (item) => {
+            if (item) {
+              this.editItem(item);
+            }
+          },
+          error: (error) => {
+            console.error('Błąd podczas ładowania przedmiotu do edycji:', error);
+          }
+        });
+      }
+    });
   }
 
   initForm(item?: Jewelry): void {

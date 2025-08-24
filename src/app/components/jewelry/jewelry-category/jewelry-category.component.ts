@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JewelryService } from '../../../services/jewelry.service';
 import { AuthService } from '../../../services/auth.service';
 import { Jewelry } from '../../../models/jewelry';
@@ -42,9 +42,9 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
     }
   };
 
-
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private jewelryService: JewelryService,
     private authService: AuthService
   ) {
@@ -101,7 +101,6 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
     }
   }
 
-
   getCategoryConfig() {
     return this.categoryConfig[this.category] || {
       name: 'Biżuteria',
@@ -136,6 +135,13 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
           console.error('Błąd podczas aktualizacji:', error);
           alert('Wystąpił błąd podczas aktualizacji');
         });
+    }
+  }
+
+  editItem(item: Jewelry): void {
+    if (item.id) {
+      // Przekieruj do panelu administratora z ID przedmiotu do edycji
+      this.router.navigate(['/admin'], { queryParams: { editId: item.id } });
     }
   }
 }
