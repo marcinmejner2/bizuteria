@@ -1,46 +1,93 @@
-/* Generyczny komponent kategorii biżuterii - NAPRAWIONY LAYOUT */
+/* Generyczny komponent kategorii biżuterii - NOWA PALETA ZIELENI */
 .category-container {
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, var(--background-color) 0%, var(--background-secondary) 100%);
 }
 
-/* Header kategorii */
-.category-header {
-  background: linear-gradient(135deg, #673ab7 0%, #9c27b0 100%);
-  color: white;
-  padding: 60px 0 80px;
-  margin-bottom: 40px;
-  position: relative;
-  overflow: hidden;
+/* Breadcrumbs navigation */
+.breadcrumbs-container {
+  background: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  padding: 12px 0;
+  margin-bottom: 30px;
 
-  .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
+  .breadcrumbs {
+    margin: 0;
     padding: 0 20px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .category-title {
-    font-size: 3.5rem;
-    font-weight: 300;
-    margin: 0 0 16px 0;
     display: flex;
     align-items: center;
-    gap: 20px;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
 
-    .category-icon {
-      font-size: 3.5rem;
-      width: auto;
-      height: auto;
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+
+    &.active {
+      .breadcrumb-current {
+        color: var(--primary-color);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+
+        .category-icon {
+          font-size: 0.9rem;
+          width: auto;
+          height: auto;
+        }
+      }
     }
   }
 
-  .category-description {
-    font-size: 1.25rem;
-    margin: 0;
-    opacity: 0.9;
-    font-weight: 300;
+  .breadcrumb-link {
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    min-height: auto;
+
+    &:hover {
+      background: var(--background-secondary);
+      color: var(--primary-color);
+    }
+
+    mat-icon {
+      font-size: 0.8rem;
+      width: auto;
+      height: auto;
+    }
+
+    span {
+      font-size: 0.75rem;
+      font-weight: 400;
+    }
+  }
+
+  .breadcrumb-text {
+    color: var(--text-light);
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: 4px 2px;
+  }
+
+  .breadcrumb-separator {
+    color: var(--border-color);
+    margin: 0 2px;
+
+    mat-icon {
+      font-size: 0.7rem;
+      width: auto;
+      height: auto;
+    }
   }
 }
 
@@ -301,6 +348,46 @@
 
   .products-section {
     padding: 0 15px 40px;
+  }
+
+  .breadcrumbs-container {
+    padding: 8px 0;
+
+    .breadcrumbs {
+      padding: 0 16px;
+      gap: 2px;
+    }
+
+    .breadcrumb-link {
+      padding: 2px 4px;
+      gap: 2px;
+
+      mat-icon {
+        font-size: 0.7rem;
+      }
+
+      span {
+        font-size: 0.7rem;
+      }
+    }
+
+    .breadcrumb-text {
+      font-size: 0.7rem;
+      padding: 2px 1px;
+    }
+
+    .breadcrumb-current {
+      font-size: 0.7rem !important;
+      gap: 4px !important;
+
+      .category-icon {
+        font-size: 0.8rem !important;
+      }
+    }
+
+    .breadcrumb-separator mat-icon {
+      font-size: 0.6rem;
+    }
   }
 }
 

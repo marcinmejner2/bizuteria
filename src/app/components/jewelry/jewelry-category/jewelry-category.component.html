@@ -1,16 +1,30 @@
 <div class="category-container">
-  <!-- Header sekcji -->
-  <div class="category-header">
-    <div class="header-content">
-      <div class="header-text">
-        <h1 class="category-title">
+  <!-- Breadcrumbs navigation -->
+  <nav class="breadcrumbs-container">
+    <ol class="breadcrumbs">
+      <li class="breadcrumb-item">
+        <a mat-button routerLink="/" class="breadcrumb-link">
+          <mat-icon>home</mat-icon>
+          <span>Strona główna</span>
+        </a>
+      </li>
+      <li class="breadcrumb-separator">
+        <mat-icon>chevron_right</mat-icon>
+      </li>
+      <li class="breadcrumb-item">
+        <span class="breadcrumb-text">Kategorie</span>
+      </li>
+      <li class="breadcrumb-separator">
+        <mat-icon>chevron_right</mat-icon>
+      </li>
+      <li class="breadcrumb-item active">
+        <span class="breadcrumb-current">
           <mat-icon class="category-icon">{{ getCategoryConfig().icon }}</mat-icon>
           {{ getCategoryConfig().name }}
-        </h1>
-        <p class="category-description">{{ getCategoryConfig().description }}</p>
-      </div>
-    </div>
-  </div>
+        </span>
+      </li>
+    </ol>
+  </nav>
 
   <!-- Lista produktów -->
   <div class="products-section">
