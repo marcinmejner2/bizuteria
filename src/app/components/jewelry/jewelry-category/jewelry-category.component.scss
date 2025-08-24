@@ -1,16 +1,49 @@
-/* Generyczny komponent kategorii biżuterii - NOWA PALETA ZIELENI */
+/* Generyczny komponent kategorii biżuterii - NOWA PALETA ZIELENI Z DRZEWEM ŻYCIA */
 .category-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--background-color) 0%, var(--background-secondary) 100%);
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  background:
+    linear-gradient(135deg, rgba(240, 248, 242, 0.85) 0%, rgba(232, 245, 234, 0.85) 100%);
+  position: relative;
 }
 
-/* Breadcrumbs navigation */
+/* Dodanie drzewa życia jako pseudo-element - większe i bardziej realistyczne */
+.category-container::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120vw;
+  height: 120vh;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cdefs%3E%3Cstyle%3E.tree-of-life%7Bfill:none;stroke:%23228B22;opacity:0.12;%7D.tree-trunk%7Bfill:%23654321;opacity:0.08;%7D%3C/style%3E%3C/defs%3E%3C!-- Okrąg zewnętrzny --%3E%3Ccircle cx='400' cy='400' r='390' stroke='%23228B22' stroke-width='4' fill='none' opacity='0.1'/%3E%3C!-- Pień drzewa --%3E%3Crect x='385' y='350' width='30' height='150' class='tree-trunk' rx='5'/%3E%3C!-- Główne gałęzie (korona) --%3E%3Cg class='tree-of-life' stroke-width='3'%3E%3C!-- Centralna gałąź --%3E%3Cpath d='M400 350 L400 250'/%3E%3C!-- Główne gałęzie poziome --%3E%3Cpath d='M400 300 Q350 280 300 300 Q280 320 270 350'/%3E%3Cpath d='M400 300 Q450 280 500 300 Q520 320 530 350'/%3E%3C!-- Drugie poziom gałęzi --%3E%3Cpath d='M400 280 Q360 260 320 270 Q300 280 290 300'/%3E%3Cpath d='M400 280 Q440 260 480 270 Q500 280 510 300'/%3E%3C!-- Górne gałęzie --%3E%3Cpath d='M400 260 Q370 240 340 250 Q320 260 310 280'/%3E%3Cpath d='M400 260 Q430 240 460 250 Q480 260 490 280'/%3E%3C!-- Najwyższe gałęzie --%3E%3Cpath d='M400 250 Q380 230 360 240'/%3E%3Cpath d='M400 250 Q420 230 440 240'/%3E%3C/g%3E%3C!-- Drobne gałązki --%3E%3Cg class='tree-of-life' stroke-width='2'%3E%3Cpath d='M270 350 Q250 340 240 330'/%3E%3Cpath d='M270 350 Q260 360 250 370'/%3E%3Cpath d='M530 350 Q550 340 560 330'/%3E%3Cpath d='M530 350 Q540 360 550 370'/%3E%3Cpath d='M290 300 Q280 290 270 280'/%3E%3Cpath d='M290 300 Q275 310 265 320'/%3E%3Cpath d='M510 300 Q520 290 530 280'/%3E%3Cpath d='M510 300 Q525 310 535 320'/%3E%3Cpath d='M310 280 Q300 270 290 260'/%3E%3Cpath d='M310 280 Q295 290 285 300'/%3E%3Cpath d='M490 280 Q500 270 510 260'/%3E%3Cpath d='M490 280 Q505 290 515 300'/%3E%3Cpath d='M360 240 Q350 230 340 220'/%3E%3Cpath d='M360 240 Q345 250 335 260'/%3E%3Cpath d='M440 240 Q450 230 460 220'/%3E%3Cpath d='M440 240 Q455 250 465 260'/%3E%3C/g%3E%3C!-- Korzenie (odbicie gałęzi) --%3E%3Cg class='tree-of-life' stroke-width='3'%3E%3C!-- Główne korzenie --%3E%3Cpath d='M400 500 Q350 520 300 500 Q280 480 270 450'/%3E%3Cpath d='M400 500 Q450 520 500 500 Q520 480 530 450'/%3E%3C!-- Drugie poziom korzeni --%3E%3Cpath d='M400 520 Q360 540 320 530 Q300 520 290 500'/%3E%3Cpath d='M400 520 Q440 540 480 530 Q500 520 510 500'/%3E%3C!-- Dolne korzenie --%3E%3Cpath d='M400 540 Q370 560 340 550 Q320 540 310 520'/%3E%3Cpath d='M400 540 Q430 560 460 550 Q480 540 490 520'/%3E%3C!-- Najgłębsze korzenie --%3E%3Cpath d='M400 550 Q380 570 360 560'/%3E%3Cpath d='M400 550 Q420 570 440 560'/%3E%3C/g%3E%3C!-- Drobne korzenie --%3E%3Cg class='tree-of-life' stroke-width='2'%3E%3Cpath d='M270 450 Q250 460 240 470'/%3E%3Cpath d='M270 450 Q260 440 250 430'/%3E%3Cpath d='M530 450 Q550 460 560 470'/%3E%3Cpath d='M530 450 Q540 440 550 430'/%3E%3Cpath d='M290 500 Q280 510 270 520'/%3E%3Cpath d='M290 500 Q275 490 265 480'/%3E%3Cpath d='M510 500 Q520 510 530 520'/%3E%3Cpath d='M510 500 Q525 490 535 480'/%3E%3Cpath d='M310 520 Q300 530 290 540'/%3E%3Cpath d='M310 520 Q295 510 285 500'/%3E%3Cpath d='M490 520 Q500 530 510 540'/%3E%3Cpath d='M490 520 Q505 510 515 500'/%3E%3Cpath d='M360 560 Q350 570 340 580'/%3E%3Cpath d='M360 560 Q345 550 335 540'/%3E%3Cpath d='M440 560 Q450 570 460 580'/%3E%3Cpath d='M440 560 Q455 550 465 540'/%3E%3C/g%3E%3C!-- Spirala życia w centrum pnia --%3E%3Cpath d='M400 400 Q405 395 410 400 Q415 410 405 415 Q390 420 385 405 Q380 390 395 385 Q420 380 430 395 Q440 415 420 430 Q390 440 375 415 Q360 380 385 365' stroke='%23228B22' stroke-width='1.5' fill='none' opacity='0.15'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Kontener dla zawartości wewnętrznej */
+.category-content-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Breadcrumbs navigation - pozostaje bez zmian w tyle */
 .breadcrumbs-container {
   background: var(--card-background);
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 2px 8px var(--shadow-color);
-  padding: 12px 0;
+  padding: 0px 0;
   margin-bottom: 30px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
 
   .breadcrumbs {
     margin: 0;

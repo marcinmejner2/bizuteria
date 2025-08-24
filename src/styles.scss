@@ -15,7 +15,8 @@ html, body {
 
 /* Custom material theme colors */
 :root {
-  --primary-color: #3f51b5;
+  --mat-toolbar-container-background-color: #137547;
+  --primary-color: #2a9134;
   --accent-color: #ff4081;
   --warn-color: #f44336;
   --background-color: #fafafa;
@@ -24,6 +25,16 @@ html, body {
   --secondary-text-color: rgba(0, 0, 0, 0.54);
   --disabled-text-color: rgba(0, 0, 0, 0.38);
   --divider-color: rgba(0, 0, 0, 0.12);
+
+  --fern: #5bba6f;
+  --chateau-green: #3fa34d;
+  --forest-green: #2a9134;
+  --jewel: #137547;
+  --kaitoke-green: #054a29;
+}
+
+.mat-toolbar.mat-primary {
+  background-color: #2a9134;
 }
 
 /* Custom component styles */
