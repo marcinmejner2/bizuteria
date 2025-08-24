@@ -32,22 +32,42 @@
           <mat-icon>home</mat-icon>
           <span>Strona główna</span>
         </a>
-        <a mat-button routerLink="/necklaces" routerLinkActive="active-link">
+        <a mat-button routerLink="/naramek" routerLinkActive="active-link">
           <mat-icon>diamond</mat-icon>
-          <span>Naszyjniki</span>
+          <span>Náramek</span> <!--Bransoletka-->
         </a>
-        <a mat-button routerLink="/bracelets" routerLinkActive="active-link">
+        <a mat-button routerLink="/privesek" routerLinkActive="active-link">
           <mat-icon>watch</mat-icon>
-          <span>Bransoletki</span>
+          <span>Přívěsek</span> <!--Wisiorek-->
         </a>
-        <a mat-button routerLink="/rings" routerLinkActive="active-link">
+          <a mat-button routerLink="/krouzek" routerLinkActive="active-link">
+              <mat-icon>watch</mat-icon>
+              <span>Kroužek</span> <!--Pierścionek-->
+          </a>
+        <a mat-button routerLink="/naramekNaKotnik" routerLinkActive="active-link">
           <mat-icon>circle</mat-icon>
-          <span>Pierścionki</span>
+          <span>Náramek na kotník</span> <!--Bransoletka na nogę-->
         </a>
-        <a mat-button routerLink="/earrings" routerLinkActive="active-link">
+        <a mat-button routerLink="/klicenka" routerLinkActive="active-link">
           <mat-icon>auto_awesome</mat-icon>
-          <span>Kolczyki</span>
+          <span>Klíčenka</span> <!--Brelok na klucze-->
         </a>
+          <a mat-button routerLink="/nausnice" routerLinkActive="active-link">
+              <mat-icon>auto_awesome</mat-icon>
+              <span>Náušnice</span> <!--Kolczyki-->
+          </a>
+          <a mat-button routerLink="/sadaSperku" routerLinkActive="active-link">
+              <mat-icon>auto_awesome</mat-icon>
+              <span>Sada šperků</span> <!--Komplety-->
+          </a>
+          <a mat-button routerLink="/mobil" routerLinkActive="active-link">
+              <mat-icon>auto_awesome</mat-icon>
+              <span>Mobil</span> <!--Na telefon-->
+          </a>
+          <a mat-button routerLink="/ostatni" routerLinkActive="active-link">
+              <mat-icon>auto_awesome</mat-icon>
+              <span>Ostatni</span> <!--Inne-->
+          </a>
         <a mat-button routerLink="/admin" routerLinkActive="active-link" *ngIf="isLoggedIn$ | async">
           <mat-icon>admin_panel_settings</mat-icon>
           <span>Panel Admin</span>

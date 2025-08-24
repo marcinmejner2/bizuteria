@@ -8,8 +8,8 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'necklaces', component: JewelryCategoryComponent, data: { category: 'necklaces' } },
-  { path: 'bracelets', component: JewelryCategoryComponent, data: { category: 'bracelets' } },
+  { path: 'naramek', component: JewelryCategoryComponent, data: { category: 'naramek' } },
+  { path: 'privesek', component: JewelryCategoryComponent, data: { category: 'privesek' } },
   { path: 'rings', component: JewelryCategoryComponent, data: { category: 'rings' } },
   { path: 'earrings', component: JewelryCategoryComponent, data: { category: 'earrings' } },
   { path: 'login', component: LoginComponent },

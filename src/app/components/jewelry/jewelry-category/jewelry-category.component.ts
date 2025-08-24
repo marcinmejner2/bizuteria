@@ -20,9 +20,14 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
 
   // Mapowanie kategorii na polskie nazwy i opisy
   private categoryConfig: { [key: string]: { name: string; description: string; icon: string } } = {
-    'necklaces': {
-      name: 'Naszyjniki',
-      description: 'Odkryj naszą wyjątkową kolekcję naszyjników',
+    'naramek': {
+      name: 'Náramek',
+      description: '',
+      icon: 'diamond'
+    },
+    'privesek': {
+      name: 'Přívěsek',
+      description: '',
       icon: 'diamond'
     },
     'bracelets': {
@@ -79,8 +84,8 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
   private loadJewelryByCategory(): void {
     // Mapowanie URL na kategorie w bazie danych
     const categoryMapping: { [key: string]: string } = {
-      'necklaces': 'necklace',
-      'bracelets': 'bracelet',
+      'naramek': 'naramek',
+      'privesek': 'privesek',
       'rings': 'ring',
       'earrings': 'earrings'
     };
