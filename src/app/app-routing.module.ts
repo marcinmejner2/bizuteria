@@ -7,7 +7,6 @@ import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
   { path: 'naramek', component: JewelryCategoryComponent, data: { category: 'naramek' } },
   { path: 'privesek', component: JewelryCategoryComponent, data: { category: 'privesek' } },
   { path: 'krouzek', component: JewelryCategoryComponent, data: { category: 'krouzek' } },
@@ -20,7 +19,7 @@ const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '' } // Przekierowanie do strony głównej, jeśli ścieżka nie istnieje
+  { path: '**', redirectTo: 'privesek' } // Przekierowanie do strony głównej, jeśli ścieżka nie istnieje
 ];
 
 @NgModule({

@@ -25,12 +25,12 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
       description: '',
       icon: 'diamond'
     },
-
     'krouzek': {
       name: 'Kroužek',
       description: '',
       icon: 'diamond'
     },
+
     'privesek': {
       name: 'Přívěsek',
       description: '',
