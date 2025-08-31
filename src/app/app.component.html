@@ -5,11 +5,17 @@
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/naramek" (click)="drawer.close()">Náramek</a>
-      <a mat-list-item routerLink="/bracelets" (click)="drawer.close()">Přívěsek</a>
-      <a mat-list-item routerLink="/rings" (click)="drawer.close()">Pierścionki</a>
-      <a mat-list-item routerLink="/earrings" (click)="drawer.close()">Kolczyki</a>
+      <a mat-list-item routerLink="/privesek" (click)="drawer.close()">Přívěsek</a>
+      <a mat-list-item routerLink="/krouzek" (click)="drawer.close()">Kroužek</a>
+      <a mat-list-item routerLink="/naramekNaKotnik" (click)="drawer.close()">Náramek na kotník</a>
+      <a mat-list-item routerLink="/klicenka" (click)="drawer.close()">Klíčenka</a>
+      <a mat-list-item routerLink="/nausnice" (click)="drawer.close()">Náušnice</a>
+      <a mat-list-item routerLink="/sadaSperku" (click)="drawer.close()">Sada šperků</a>
+      <a mat-list-item routerLink="/mobil" (click)="drawer.close()">Mobil</a>
+      <a mat-list-item routerLink="/ostatni" (click)="drawer.close()">Ostatni</a>
+
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/login" *ngIf="!(isLoggedIn$ | async)" (click)="drawer.close()">Logowanie</a>
+      <a mat-list-item routerLink="/login" *ngIf="!(isLoggedIn$ | async)" (click)="drawer.close()">Přihlášení</a>
       <a mat-list-item routerLink="/admin" *ngIf="isLoggedIn$ | async" (click)="drawer.close()">Panel administratora</a>
       <a mat-list-item *ngIf="isLoggedIn$ | async" (click)="logout(); drawer.close()">Wyloguj</a>
     </mat-nav-list>

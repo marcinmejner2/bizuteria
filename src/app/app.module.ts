@@ -3,6 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeCs from '@angular/common/locales/cs';
+
+// Rejestracja czeskiej lokalizacji
+registerLocaleData(localeCs);
 
 // Material Imports
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -84,7 +89,7 @@ import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.
     MatDividerModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pl' }
+    { provide: LOCALE_ID, useValue: 'cs' }
   ],
   bootstrap: [AppComponent]
 })

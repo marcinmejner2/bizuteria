@@ -5,7 +5,7 @@
       <li class="breadcrumb-item">
         <a mat-button routerLink="/" class="breadcrumb-link">
           <mat-icon>home</mat-icon>
-          <span>Strona główna</span>
+          <span>Hlavní stránka</span>
         </a>
       </li>
       <li class="breadcrumb-separator">
@@ -53,7 +53,7 @@
               <h3 class="product-title">{{ item.name }}</h3>
               <div *ngIf="!item.inStock" class="unavailable-notice">Nepřístupný</div>
               <p class="product-description">{{ item.description }}</p>
-              <div class="product-price">{{ item.price | currency:'PLN':'symbol':'1.2-2':'pl' }}</div>
+              <div class="product-price">{{ item.price | currency:'CZK':'symbol':'1.2-2':'cs' }}</div>
             </mat-card-content>
 
 
