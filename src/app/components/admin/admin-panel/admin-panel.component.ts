@@ -103,13 +103,92 @@ export class AdminPanelComponent implements OnInit {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      console.log('Wybrano plik:', this.selectedFile.name);
+      const file = input.files[0];
+      console.log('Wybrano plik:', file.name, 'rozmiar:', this.formatFileSize(file.size));
 
-      // Zmień walidację pola URL - nie jest wymagane, gdy mamy plik
-      this.jewelryForm.get('imageUrl')?.clearValidators();
-      this.jewelryForm.get('imageUrl')?.updateValueAndValidity();
+      // Kompresuj obrazek przed ustawieniem
+      this.compressImage(file).then(compressedFile => {
+        this.selectedFile = compressedFile;
+        console.log('Plik po kompresji:', compressedFile.name, 'rozmiar:', this.formatFileSize(compressedFile.size));
+
+        // Zmień walidację pola URL - nie jest wymagane, gdy mamy plik
+        this.jewelryForm.get('imageUrl')?.clearValidators();
+        this.jewelryForm.get('imageUrl')?.updateValueAndValidity();
+      }).catch(error => {
+        console.error('Błąd podczas kompresji obrazu:', error);
+        // W przypadku błędu użyj oryginalnego pliku
+        this.selectedFile = file;
+        this.jewelryForm.get('imageUrl')?.clearValidators();
+        this.jewelryForm.get('imageUrl')?.updateValueAndValidity();
+      });
     }
+  }
+
+  private compressImage(file: File): Promise<File> {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      img.onload = () => {
+        // Ustaw maksymalne wymiary (zachowaj proporcje)
+        const maxWidth = 800;
+        const maxHeight = 800;
+        let { width, height } = img;
+
+        // Oblicz nowe wymiary zachowując proporcje
+        if (width > height) {
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = (width * maxHeight) / height;
+            height = maxHeight;
+          }
+        }
+
+        // Ustaw wymiary canvas
+        canvas.width = width;
+        canvas.height = height;
+
+        if (!ctx) {
+          reject(new Error('Nie można uzyskać kontekstu canvas'));
+          return;
+        }
+
+        // Narysuj przeskalowany obrazek
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Konwertuj do blob z kompresją
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error('Nie można skompresować obrazu'));
+            return;
+          }
+
+          // Utwórz nowy plik z skompresowanymi danymi
+          const compressedFile = new File([blob], file.name, {
+            type: 'image/jpeg', // Zawsze zapisz jako JPEG dla lepszej kompresji
+            lastModified: Date.now()
+          });
+
+          resolve(compressedFile);
+        }, 'image/jpeg', 0.80); // Jakość 85% - dobry kompromis między rozmiarem a jakością
+      };
+
+      img.onerror = () => reject(new Error('Nie można załadować obrazu'));
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  private formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
   clearSelectedFile(): void {
