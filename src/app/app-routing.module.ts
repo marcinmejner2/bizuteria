@@ -10,8 +10,14 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'naramek', component: JewelryCategoryComponent, data: { category: 'naramek' } },
   { path: 'privesek', component: JewelryCategoryComponent, data: { category: 'privesek' } },
-  { path: 'rings', component: JewelryCategoryComponent, data: { category: 'rings' } },
-  { path: 'earrings', component: JewelryCategoryComponent, data: { category: 'earrings' } },
+  { path: 'krouzek', component: JewelryCategoryComponent, data: { category: 'krouzek' } },
+  { path: 'naramekNaKotnik', component: JewelryCategoryComponent, data: { category: 'naramekNaKotnik' } },
+  { path: 'klicenka', component: JewelryCategoryComponent, data: { category: 'klicenka' } },
+  { path: 'nausnice', component: JewelryCategoryComponent, data: { category: 'nausnice' } },
+  { path: 'sadaSperku', component: JewelryCategoryComponent, data: { category: 'sadaSperku' } },
+  { path: 'mobil', component: JewelryCategoryComponent, data: { category: 'mobil' } },
+  { path: 'ostatni', component: JewelryCategoryComponent, data: { category: 'ostatni' } },
+
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' } // Przekierowanie do strony głównej, jeśli ścieżka nie istnieje

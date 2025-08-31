@@ -25,26 +25,48 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
       description: '',
       icon: 'diamond'
     },
+
+    'krouzek': {
+      name: 'Kroužek',
+      description: '',
+      icon: 'diamond'
+    },
     'privesek': {
       name: 'Přívěsek',
       description: '',
       icon: 'diamond'
     },
-    'bracelets': {
-      name: 'Bransoletki',
-      description: 'Eleganckie bransoletki na każdą okazję',
-      icon: 'watch'
+    'naramekNaKotnik': {
+      name: 'Náramek na kotník',
+      description: '',
+      icon: 'diamond'
     },
-    'rings': {
-      name: 'Pierścionki',
-      description: 'Piękne pierścionki o unikalnym designie',
-      icon: 'circle'
+    'klicenka': {
+      name: 'Klíčenka',
+      description: '',
+      icon: 'diamond'
     },
-    'earrings': {
-      name: 'Kolczyki',
-      description: 'Subtelne i efektowne kolczyki',
-      icon: 'auto_awesome'
-    }
+    'nausnice': {
+      name: 'Náušnice',
+      description: '',
+      icon: 'diamond'
+    },
+    'sadaSperku': {
+      name: 'Sada šperků',
+      description: '',
+      icon: 'diamond'
+    },
+    'mobil': {
+      name: 'Mobil',
+      description: '',
+      icon: 'diamond'
+    },
+    'ostatni': {
+      name: 'Ostatni',
+      description: '',
+      icon: 'diamond'
+    },
+
   };
 
   constructor(
@@ -84,10 +106,10 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
   private loadJewelryByCategory(): void {
     // Mapowanie URL na kategorie w bazie danych
     const categoryMapping: { [key: string]: string } = {
-      'naramek': 'naramek',
       'privesek': 'privesek',
-      'rings': 'ring',
-      'earrings': 'earrings'
+      'krouzek': 'krouzek',
+      'naramek': 'naramek',
+      'naramekNaKotnik': 'naramekNaKotnik'
     };
 
     const dbCategory = categoryMapping[this.category];
@@ -108,8 +130,8 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
 
   getCategoryConfig() {
     return this.categoryConfig[this.category] || {
-      name: 'Biżuteria',
-      description: 'Nasza kolekcja biżuterii',
+      name: 'naramek',
+      description: 'Nasza kolekcja biżuterii1',
       icon: 'diamond'
     };
   }
