@@ -18,6 +18,7 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
   isLoggedIn$: Observable<boolean>;
   private destroy$ = new Subject<void>();
 
+
   // Mapowanie kategorii na polskie nazwy i opisy
   private categoryConfig: { [key: string]: { name: string; description: string; icon: string } } = {
     'naramek': {
