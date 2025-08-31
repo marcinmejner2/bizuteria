@@ -126,9 +126,6 @@
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Opis produktu</mat-label>
                   <textarea matInput formControlName="description" rows="4" placeholder="Opisz szczegóły produktu..."></textarea>
-                  <mat-error *ngIf="jewelryForm.get('description')?.hasError('required')">
-                    Opis jest wymagany
-                  </mat-error>
                 </mat-form-field>
               </div>
 

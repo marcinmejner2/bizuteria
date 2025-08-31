@@ -1,11 +1,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyC6ey8f8szdzSeX8Dr95WMR_ZUV91ki58o",
-    authDomain: "gosiabizuteria-b6757.firebaseapp.com",
-    projectId: "gosiabizuteria-b6757",
-    storageBucket: "gosiabizuteria-b6757.firebasestorage.app",
-    messagingSenderId: "215270129310",
-    appId: "1:215270129310:web:63ee83302ca00f51b4c58f" // Tutaj wstaw prawidłowy web appId z konsoli Firebase
+    apiKey: "AIzaSyDYrYZeuFccs3boIXZIuUqJC9akQmL8TzE",
+    authDomain: "gosi-a570e.firebaseapp.com",
+    projectId: "gosi-a570e",
+    storageBucket: "gosi-a570e.firebasestorage.app",
+    messagingSenderId: "241547826911",
+    appId: "1:241547826911:web:bd003b7a277e13b580fb6a",
+    measurementId: "G-TCGHYV9XRS"
   }
 };

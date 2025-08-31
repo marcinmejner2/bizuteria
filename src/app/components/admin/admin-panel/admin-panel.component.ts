@@ -54,7 +54,7 @@ export class AdminPanelComponent implements OnInit {
 
     this.jewelryForm = this.fb.group({
       name: [item?.name || '', Validators.required],
-      description: [item?.description || '', Validators.required],
+      description: [item?.description || ''], // Usunięto Validators.required
       price: [item?.price || '', [Validators.required, Validators.min(0.01)]],
       imageUrl: [item?.imageUrl || '', urlValidators],
       category: [item?.category || '', Validators.required],
