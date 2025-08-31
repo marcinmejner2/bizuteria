@@ -49,6 +49,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+
   initForm(item?: Jewelry): void {
     const urlValidators = this.selectedFile ? [] : [Validators.required];
 
