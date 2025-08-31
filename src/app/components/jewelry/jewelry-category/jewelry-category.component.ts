@@ -18,6 +18,10 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
   isLoggedIn$: Observable<boolean>;
   private destroy$ = new Subject<void>();
 
+  // Modal dla powiększonych obrazków
+  showImageModal: boolean = false;
+  modalImageUrl: string = '';
+  modalImageAlt: string = '';
 
   // Mapowanie kategorii na polskie nazwy i opisy
   private categoryConfig: { [key: string]: { name: string; description: string; icon: string } } = {
@@ -171,5 +175,17 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
       // Przekieruj do panelu administratora z ID przedmiotu do edycji
       this.router.navigate(['/admin'], { queryParams: { editId: item.id } });
     }
+  }
+
+  openImageModal(imageUrl: string, imageAlt: string): void {
+    this.modalImageUrl = imageUrl;
+    this.modalImageAlt = imageAlt;
+    this.showImageModal = true;
+  }
+
+  closeImageModal(): void {
+    this.showImageModal = false;
+    this.modalImageUrl = '';
+    this.modalImageAlt = '';
   }
 }

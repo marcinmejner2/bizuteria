@@ -40,7 +40,9 @@
                 [alt]="item.name"
                 class="product-image"
                 [ngClass]="{'grayscale': !item.inStock}"
-                loading="lazy">
+                loading="lazy"
+                (click)="openImageModal(item.imageUrl, item.name)"
+                style="cursor: pointer;">
 
               <!-- Badge dostępności -->
               <div *ngIf="!item.inStock" class="stock-badge" [ngClass]="item.inStock ? 'in-stock' : 'out-of-stock'">
@@ -50,10 +52,10 @@
 
             <!-- Informacje o produkcie -->
             <mat-card-content class="product-info">
-              <h3 class="product-title">{{ item.name }}</h3>
+              <h3 class="product-title"><span style="font-size: 16px; color: black">jméno:</span> {{ item.name }}</h3>
               <div *ngIf="!item.inStock" class="unavailable-notice">Nepřístupný</div>
               <p class="product-description">{{ item.description }}</p>
-              <div class="product-price">{{ item.price | currency:'CZK':'symbol':'1.2-2':'cs' }}</div>
+              <div class="product-price"><span style="font-size: 16px; color: black">cena:</span> {{ item.price | currency:'CZK':'symbol':'1.2-2':'cs' }}</div>
             </mat-card-content>
 
 
@@ -108,6 +110,17 @@
           </div>
         </div>
       </ng-template>
+    </div>
+  </div>
+
+  <!-- Modal dla powiększonych obrazków -->
+  <div class="image-modal-overlay" *ngIf="showImageModal" (click)="closeImageModal()">
+    <div class="image-modal-container" (click)="$event.stopPropagation()">
+      <button class="image-modal-close" (click)="closeImageModal()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+      <img [src]="modalImageUrl" [alt]="modalImageAlt" class="image-modal-content">
+      <div class="image-modal-caption">{{ modalImageAlt }}</div>
     </div>
   </div>
 </div>
