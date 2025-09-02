@@ -48,6 +48,39 @@
   padding: 0 20px 40px;
 }
 
+/* Loading spinner styles */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 40px 20px;
+}
+
+.loading-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  h3 {
+    margin: 20px 0 10px;
+    color: #2a9134;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+    color: #5bba6f;
+    font-size: 16px;
+    opacity: 0.8;
+  }
+}
+
 /* Breadcrumbs navigation - pozostaje bez zmian w tyle */
 .breadcrumbs-container {
   position: relative;

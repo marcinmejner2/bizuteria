@@ -18,6 +18,9 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
   isLoggedIn$: Observable<boolean>;
   private destroy$ = new Subject<void>();
 
+  // Loading state
+  isLoading: boolean = true;
+
   // Modal dla powiększonych obrazków
   showImageModal: boolean = false;
   modalImageUrl: string = '';
@@ -109,6 +112,9 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
   }
 
   private loadJewelryByCategory(): void {
+    // Rozpocznij ładowanie
+    this.isLoading = true;
+
     // Mapowanie URL na kategorie w bazie danych
     const categoryMapping: { [key: string]: string } = {
       'privesek': 'privesek',
@@ -129,17 +135,29 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
     if (dbCategory) {
       this.jewelryService.getJewelryByCategory(dbCategory)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(items => {
-          console.log('Loaded items for category:', dbCategory, 'count:', items.length);
-          // Sortowanie produktów alfabetycznie po nazwach
-          this.jewelryItems = items.sort((a, b) => a.name.localeCompare(b.name, 'cs', {
-            numeric: true,
-            sensitivity: 'base'
-          }));
+        .subscribe({
+          next: (items) => {
+            console.log('Loaded items for category:', dbCategory, 'count:', items.length);
+            // Sortowanie produktów alfabetycznie po nazwach
+            this.jewelryItems = items.sort((a, b) => a.name.localeCompare(b.name, 'cs', {
+              numeric: true,
+              sensitivity: 'base'
+            }));
+            // Zakończ ładowanie
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.error('Błąd podczas ładowania produktów:', error);
+            this.jewelryItems = [];
+            // Zakończ ładowanie nawet w przypadku błędu
+            this.isLoading = false;
+          }
         });
     } else {
       console.error('Unknown category:', this.category);
       this.jewelryItems = [];
+      // Zakończ ładowanie
+      this.isLoading = false;
     }
   }
 

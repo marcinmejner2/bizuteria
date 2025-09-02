@@ -28,8 +28,17 @@
 
   <!-- Wrapper dla zawartości wewnętrznej -->
   <div class="category-content-wrapper">
+    <!-- Loading spinner -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loading-content">
+        <mat-spinner diameter="60" color="primary"></mat-spinner>
+        <h3>Načítání produktů...</h3>
+        <p>Čekejte prosím, zatímco načítáme produkty kategorie {{ getCategoryConfig().name }}</p>
+      </div>
+    </div>
+
     <!-- Lista produktów -->
-    <div class="products-section">
+    <div class="products-section" *ngIf="!isLoading">
       <div class="products-container" *ngIf="jewelryItems.length > 0; else noProducts">
         <div class="products-grid">
           <mat-card class="product-card" *ngFor="let item of jewelryItems" [ngClass]="{'out-of-stock': !item.inStock}">
