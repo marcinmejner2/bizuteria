@@ -114,7 +114,13 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
       'privesek': 'privesek',
       'krouzek': 'krouzek',
       'naramek': 'naramek',
-      'naramekNaKotnik': 'naramekNaKotnik'
+      'nausnice': 'nausnice',
+      'naramekNaKotnik': 'naramekNaKotnik',
+      'klicenka': 'klicenka',
+      'sadaSperku': 'sadaSperku',
+      'mobil': 'mobil',
+      'ostatni': 'ostatni',
+
     };
 
     const dbCategory = categoryMapping[this.category];
