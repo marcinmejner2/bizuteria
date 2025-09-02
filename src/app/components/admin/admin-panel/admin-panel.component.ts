@@ -65,7 +65,11 @@ export class AdminPanelComponent implements OnInit {
 
   loadJewelry(): void {
     this.jewelryService.getAllJewelry().subscribe(items => {
-      this.jewelryList = items;
+      // Sortowanie produktów alfabetycznie po nazwach
+      this.jewelryList = items.sort((a, b) => a.name.localeCompare(b.name, 'cs', {
+        numeric: true,
+        sensitivity: 'base'
+      }));
       this.applyFilters();
     });
   }
@@ -89,7 +93,11 @@ export class AdminPanelComponent implements OnInit {
       );
     }
 
-    this.filteredJewelry = filtered;
+    // Sortowanie przefiltrowanych wyników alfabetycznie po nazwach
+    this.filteredJewelry = filtered.sort((a, b) => a.name.localeCompare(b.name, 'cs', {
+      numeric: true,
+      sensitivity: 'base'
+    }));
   }
 
   // Nowa metoda do czyszczenia filtrów

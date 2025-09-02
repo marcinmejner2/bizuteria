@@ -131,7 +131,11 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(items => {
           console.log('Loaded items for category:', dbCategory, 'count:', items.length);
-          this.jewelryItems = items;
+          // Sortowanie produktów alfabetycznie po nazwach
+          this.jewelryItems = items.sort((a, b) => a.name.localeCompare(b.name, 'cs', {
+            numeric: true,
+            sensitivity: 'base'
+          }));
         });
     } else {
       console.error('Unknown category:', this.category);
