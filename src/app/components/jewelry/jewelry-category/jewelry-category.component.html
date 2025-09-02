@@ -37,6 +37,7 @@
       </div>
     </div>
 
+
     <!-- Lista produktów -->
     <div class="products-section" *ngIf="!isLoading">
       <div class="products-container" *ngIf="jewelryItems.length > 0; else noProducts">
@@ -63,7 +64,7 @@
             <mat-card-content class="product-info">
               <h3 class="product-title"><span style="font-size: 16px; color: black">číslo:</span> {{ item.name }}</h3>
               <div *ngIf="!item.inStock" class="unavailable-notice">Nepřístupný</div>
-              <p class="product-description">{{ item.description }}</p>
+              <p *ngIf="item?.description" class="product-description">{{ item.description }}</p>
               <div class="product-price"><span style="font-size: 16px; color: black">cena:</span> {{ item.price | currency:'CZK':'symbol':'1.2-2':'cs' }}</div>
             </mat-card-content>
 

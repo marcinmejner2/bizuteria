@@ -188,146 +188,307 @@
   }
 }
 
-/* Karta produktu - NAPRAWIONE PROPORCJE */
+/* Karta produktu - PROFESJONALNY DESIGN */
 .product-card {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  border-radius: 16px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.04);
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.12),
+      0 12px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba(95, 186, 111, 0.2);
   }
 
   &.out-of-stock {
-    opacity: 0.7;
+    opacity: 0.75;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(244, 67, 54, 0.03);
+      pointer-events: none;
+      z-index: 1;
+    }
   }
 }
 
-/* Kontener obrazka - POPRAWKA dla pełnej widoczności */
+/* Kontener obrazka - PREMIUM DESIGN */
 .product-image-container {
   position: relative;
   width: 100%;
-  height: 300px; /* Stała wysokość */
+  height: 320px;
   overflow: hidden;
-  background: #f5f5f5;
+  background: linear-gradient(145deg, #f8f9fa 0%, #ffffff 100%);
   display: flex;
   align-items: center;
   justify-content: center;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(95, 186, 111, 0.02) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(95, 186, 111, 0.02) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
   .product-image {
+    margin-top: 20px;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* ZMIANA: contain zamiast cover - pokazuje cały obraz */
+    object-fit: contain;
     object-position: center;
-    transition: all 0.3s ease;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 2;
+    position: relative;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 
     &.grayscale {
-      filter: grayscale(100%);
+      filter: grayscale(100%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
     }
 
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.08);
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+
+      &.grayscale {
+        filter: grayscale(100%) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+      }
     }
   }
 
   .stock-badge {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
+    top: 16px;
+    right: 16px;
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    z-index: 3;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
     &.out-of-stock {
-      background: #f44336;
+      background: linear-gradient(135deg, #ff5252 0%, #f44336 100%);
       color: white;
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
     }
 
     &.in-stock {
-      background: #4caf50;
+      background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
       color: white;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
     }
   }
 }
 
-/* Informacje o produkcie */
+/* Informacje o produkcie - ELEGANCKI DESIGN */
 .product-info {
-  padding: 20px !important;
+  padding: 24px !important;
+  background: white;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(95, 186, 111, 0.2) 50%,
+      transparent 100%
+    );
+  }
 
   .product-title {
-    margin: 0 0 8px 0;
-    font-size: 18px;
+    margin: 0 0 12px 0;
+    font-size: 19px;
     font-weight: 600;
     color: #2a9134;
-    line-height: 1.3;
+    line-height: 1.4;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    span {
+      font-size: 14px !important;
+      color: #666 !important;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
   }
 
   .unavailable-notice {
-    color: #f44336;
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    color: #c62828;
+    font-weight: 700;
+    font-size: 12px;
+    margin: 0 0 12px 0;
+    padding: 6px 12px;
+    border-radius: 16px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    text-align: center;
+    border: 1px solid rgba(198, 40, 40, 0.2);
+    display: inline-block;
   }
 
   .product-description {
-    margin: 8px 0;
-    color: #666;
+    margin: 12px 0 16px 0;
+    color: #555;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    min-height: 40px;
   }
 
   .product-price {
-    margin: 12px 0 0 0;
-    font-size: 20px;
+    margin: 16px 0 0 0;
+    font-size: 22px;
     font-weight: 700;
-    color: #137547;
+    background: linear-gradient(135deg, #2a9134 0%, #137547 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    span {
+      font-size: 14px !important;
+      color: #666 !important;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      -webkit-text-fill-color: #666 !important;
+    }
   }
 }
 
-/* Panel administratora */
+/* Panel administratora - PREMIUM DESIGN */
 .admin-controls {
-  background: #f8f9fa;
-  border-top: 1px solid #eee;
-  padding: 16px !important;
+  background: linear-gradient(145deg, #f8f9fa 0%, #ffffff 100%);
+  border-top: 1px solid rgba(95, 186, 111, 0.1);
+  padding: 20px !important;
+  position: relative;
+  z-index: 2;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(95, 186, 111, 0.3) 50%,
+      transparent 100%
+    );
+  }
 
   .admin-section {
     width: 100%;
 
     h4 {
-      margin: 0 0 12px 0;
+      margin: 0 0 16px 0;
       color: #2a9134;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &::before {
+        content: '⚙️';
+        font-size: 14px;
+      }
     }
 
     .admin-actions {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
 
       mat-slide-toggle {
         margin-bottom: 8px;
+
+        .mdc-switch {
+          --mdc-switch-selected-track-color: #5bba6f;
+          --mdc-switch-selected-handle-color: #2a9134;
+        }
       }
 
       button {
         width: 100%;
+        border-radius: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
         &.edit-btn {
-          margin-bottom: 4px;
+          margin-bottom: 6px;
+          background: linear-gradient(135deg, #5bba6f 0%, #3fa34d 100%);
+          border: none;
+          color: white;
+          box-shadow: 0 2px 8px rgba(95, 186, 111, 0.3);
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(95, 186, 111, 0.4);
+          }
+        }
+
+        &.delete-btn {
+          background: linear-gradient(135deg, #ff5252 0%, #f44336 100%);
+          border: none;
+          color: white;
+          box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+          }
+        }
+
+        mat-icon {
+          margin-right: 8px;
         }
       }
     }
