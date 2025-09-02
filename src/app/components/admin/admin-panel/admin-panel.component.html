@@ -211,6 +211,17 @@
                   Anuluj
                 </button>
 
+                <button type="button" mat-stroked-button color="accent" (click)="resetForm()" [disabled]="isSubmitting" *ngIf="!editItemId">
+                  <mat-icon>refresh</mat-icon>
+                  Wyczyść formularz
+                </button>
+
+                <button type="button" mat-raised-button color="accent" (click)="addProductAndStay()" [disabled]="jewelryForm.invalid || isSubmitting" *ngIf="!editItemId">
+                  <mat-icon>add_circle</mat-icon>
+                  Dodaj i zostań
+                </button>
+
+
                 <button type="submit" mat-raised-button color="primary" [disabled]="jewelryForm.invalid || isSubmitting">
                   <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
                   <mat-icon *ngIf="!isSubmitting">{{ editItemId ? 'save' : 'add' }}</mat-icon>

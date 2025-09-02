@@ -226,8 +226,7 @@ export class AdminPanelComponent implements OnInit {
           .then(() => {
             this.selectedTabIndex = 0; // Wróć do listy
             this.loadJewelry();
-            this.selectedFile = null;
-            this.editItemId = null;
+            this.resetForm(); // Wyczyść formularz
           })
           .catch(error => {
             console.error('Błąd podczas aktualizacji:', error);
@@ -242,7 +241,7 @@ export class AdminPanelComponent implements OnInit {
           .then(() => {
             this.selectedTabIndex = 0; // Wróć do listy
             this.loadJewelry();
-            this.editItemId = null;
+            this.resetForm(); // Wyczyść formularz
           })
           .catch(error => {
             console.error('Błąd podczas aktualizacji:', error);
@@ -260,8 +259,7 @@ export class AdminPanelComponent implements OnInit {
           console.log('Przedmiot dodany pomyślnie', result);
           this.selectedTabIndex = 0; // Wróć do listy
           this.loadJewelry();
-          this.jewelryForm.reset();
-          this.selectedFile = null;
+          this.resetForm(); // Wyczyść formularz
         })
         .catch(error => {
           console.error('Błąd podczas dodawania:', error);
@@ -272,6 +270,33 @@ export class AdminPanelComponent implements OnInit {
         });
     }
   }
+
+  // Metoda do dodania produktu i pozostania na formularzu
+  addProductAndStay(): void {
+    if (this.jewelryForm.invalid && !this.selectedFile) {
+      console.log('Formularz jest nieprawidłowy', this.jewelryForm.errors);
+      return;
+    }
+
+    this.isSubmitting = true;
+    const formData = this.jewelryForm.value as Jewelry;
+
+    this.jewelryService.addJewelry(formData, this.selectedFile || undefined)
+      .then((result) => {
+        console.log('Przedmiot dodany pomyślnie', result);
+        this.loadJewelry();
+        this.resetForm(); // Wyczyść formularz ale zostań na zakładce
+        alert('Produkt został dodany pomyślnie! Możesz dodać kolejny.');
+      })
+      .catch(error => {
+        console.error('Błąd podczas dodawania:', error);
+        alert('Wystąpił błąd podczas dodawania przedmiotu: ' + error.message);
+      })
+      .finally(() => {
+        this.isSubmitting = false;
+      });
+  }
+
 
   handleSubmitClick(event: Event): void {
     console.log('Kliknięto przycisk submit');
@@ -298,6 +323,37 @@ export class AdminPanelComponent implements OnInit {
         control?.markAsTouched();
       });
     }
+  }
+
+  // Nowa metoda do kompletnego resetowania formularza
+  resetForm(): void {
+    this.selectedFile = null;
+    this.editItemId = null;
+    this.jewelryForm.reset();
+
+    // Ustaw domyślne wartości
+    this.jewelryForm.patchValue({
+      name: '',
+      description: '',
+      price: '',
+      imageUrl: '',
+      category: '',
+      inStock: true
+    });
+
+    // Przywróć walidację pola URL
+    this.jewelryForm.get('imageUrl')?.setValidators([Validators.required]);
+    this.jewelryForm.get('imageUrl')?.updateValueAndValidity();
+
+    // Oznacz formularz jako nietknięty
+    this.jewelryForm.markAsUntouched();
+    this.jewelryForm.markAsPristine();
+
+    // Wyczyść wszystkie błędy walidacji
+    Object.keys(this.jewelryForm.controls).forEach(key => {
+      const control = this.jewelryForm.get(key);
+      control?.setErrors(null);
+    });
   }
 
   // Metoda do tłumaczenia nazw kategorii
