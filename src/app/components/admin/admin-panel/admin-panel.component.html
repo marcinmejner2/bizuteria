@@ -22,7 +22,7 @@
               <mat-form-field appearance="outline" class="category-filter">
                 <mat-label>Kategoria</mat-label>
                 <mat-select [(ngModel)]="categoryFilter" (selectionChange)="applyFilters()">
-                    <mat-option value="">Wybierz kategorię</mat-option>
+                    <mat-option value="">Wszystkie kategorie</mat-option>
                     <mat-option value="naramek">Náramek</mat-option>
                     <mat-option value="privesek">Přívěsek</mat-option>
                     <mat-option value="krouzek">Kroužek</mat-option>
@@ -35,11 +35,34 @@
                 </mat-select>
               </mat-form-field>
 
+              <!-- Nowy filtr dostępności -->
+              <mat-form-field appearance="outline" class="availability-filter">
+                <mat-label>Dostępność</mat-label>
+                <mat-select [(ngModel)]="availabilityFilter" (selectionChange)="applyFilters()">
+                  <mat-option value="all">Wszystkie</mat-option>
+                  <mat-option value="available">Tylko dostępne</mat-option>
+                  <mat-option value="unavailable">Tylko niedostępne</mat-option>
+                </mat-select>
+              </mat-form-field>
+
               <mat-form-field appearance="outline" class="search-filter">
-                <mat-label>Szukaj produktu</mat-label>
+                <mat-label>Szukaj produktu po nazwie</mat-label>
                 <input matInput [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Nazwa lub opis...">
                 <mat-icon matSuffix>search</mat-icon>
               </mat-form-field>
+
+                <!-- Nowy wiersz filtrów cenowych -->
+                <div class="filters-row price-filters">
+                    <mat-form-field appearance="outline" class="price-filter">
+                        <mat-label>Cena od</mat-label>
+                        <input matInput type="number" [(ngModel)]="priceRange.min" (input)="applyFilters()" min="0" placeholder="0">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="price-filter">
+                        <mat-label>Cena do</mat-label>
+                        <input matInput type="number" [(ngModel)]="priceRange.max" (input)="applyFilters()" min="0" placeholder="Max">
+                    </mat-form-field>
+                </div>
 
 
               <button mat-raised-button color="primary" (click)="clearFilters()" class="clear-filters-btn">
@@ -47,6 +70,8 @@
                 Wyczyść filtry
               </button>
             </div>
+
+
           </mat-card-content>
         </mat-card>
 
@@ -217,6 +242,7 @@
                 </button>
 
                 <button type="button" mat-raised-button color="accent" (click)="addProductAndStay()" [disabled]="jewelryForm.invalid || isSubmitting" *ngIf="!editItemId">
+                  <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
                   <mat-icon>add_circle</mat-icon>
                   Dodaj
                 </button>

@@ -20,6 +20,10 @@ export class AdminPanelComponent implements OnInit {
   editItemId: string | null = null;
   selectedFile: File | null = null;
 
+  // Nowe zmienne do filtrowania
+  priceRange: {min: number | null, max: number | null} = {min: null, max: null};
+  availabilityFilter: string = 'all'; // 'all', 'available', 'unavailable'
+
   constructor(
     private jewelryService: JewelryService,
     private fb: FormBuilder,
@@ -93,6 +97,23 @@ export class AdminPanelComponent implements OnInit {
       );
     }
 
+    // Filtrowanie po cenie
+    if (this.priceRange.min !== null || this.priceRange.max !== null) {
+      filtered = filtered.filter(item => {
+        const price = item.price || 0;
+        const inRange = (this.priceRange.min === null || price >= this.priceRange.min) &&
+                        (this.priceRange.max === null || price <= this.priceRange.max);
+        return inRange;
+      });
+    }
+
+    // Filtrowanie po dostępności
+    if (this.availabilityFilter === 'available') {
+      filtered = filtered.filter(item => item.inStock);
+    } else if (this.availabilityFilter === 'unavailable') {
+      filtered = filtered.filter(item => !item.inStock);
+    }
+
     // Sortowanie przefiltrowanych wyników alfabetycznie po nazwach
     this.filteredJewelry = filtered.sort((a, b) => a.name.localeCompare(b.name, 'cs', {
       numeric: true,
@@ -104,6 +125,8 @@ export class AdminPanelComponent implements OnInit {
   clearFilters(): void {
     this.searchTerm = '';
     this.categoryFilter = '';
+    this.priceRange = {min: null, max: null};
+    this.availabilityFilter = 'all';
     this.applyFilters();
   }
 
