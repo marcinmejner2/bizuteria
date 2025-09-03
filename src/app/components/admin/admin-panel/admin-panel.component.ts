@@ -20,6 +20,9 @@ export class AdminPanelComponent implements OnInit {
   editItemId: string | null = null;
   selectedFile: File | null = null;
 
+  // Nowa zmienna do podglądu zdjęcia
+  imagePreviewUrl: string | null = null;
+
   // Nowe zmienne do filtrowania
   priceRange: {min: number | null, max: number | null} = {min: null, max: null};
   availabilityFilter: string = 'all'; // 'all', 'available', 'unavailable'
@@ -130,12 +133,25 @@ export class AdminPanelComponent implements OnInit {
     this.applyFilters();
   }
 
+  // Metoda do aktualizacji podglądu zdjęcia na podstawie URL
+  updateImagePreview(): void {
+    const imageUrl = this.jewelryForm.get('imageUrl')?.value;
+    if (imageUrl && imageUrl.trim() !== '') {
+      this.imagePreviewUrl = imageUrl;
+    } else {
+      this.imagePreviewUrl = null;
+    }
+  }
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       console.log('Wybrano plik:', file.name, 'rozmiar:', this.formatFileSize(file.size));
+
+      // Utwórz podgląd obrazu
+      this.imagePreviewUrl = URL.createObjectURL(file);
 
       // Kompresuj obrazek przed ustawieniem
       this.compressImage(file).then(compressedFile => {
@@ -206,7 +222,7 @@ export class AdminPanelComponent implements OnInit {
           });
 
           resolve(compressedFile);
-        }, 'image/jpeg', 0.80); // Jakość 85% - dobry kompromis między rozmiarem a jakością
+        }, 'image/jpeg', 0.80); // Jakość 80% - dobry kompromis między rozmiarem a jakością
       };
 
       img.onerror = () => reject(new Error('Nie można załadować obrazu'));
@@ -222,8 +238,10 @@ export class AdminPanelComponent implements OnInit {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
+  // Zaktualizowana metoda wyczyszczenia wybranego pliku
   clearSelectedFile(): void {
     this.selectedFile = null;
+    this.imagePreviewUrl = null; // Czyszczenie podglądu
 
     // Przywróć walidację pola URL - jest wymagane, gdy nie mamy pliku
     this.jewelryForm.get('imageUrl')?.setValidators([Validators.required]);
@@ -302,7 +320,7 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  // Metoda do dodania produktu i pozostania na formularzu
+  // Metoda do dodania produktu i pozostania na formularze
   addProductAndStay(): void {
     if (this.jewelryForm.invalid && !this.selectedFile) {
       console.log('Formularz jest nieprawidłowy', this.jewelryForm.errors);
@@ -359,6 +377,7 @@ export class AdminPanelComponent implements OnInit {
   // Nowa metoda do kompletnego resetowania formularza
   resetForm(): void {
     this.selectedFile = null;
+    this.imagePreviewUrl = null; // Resetowanie podglądu obrazka
     this.editItemId = null;
     this.jewelryForm.reset();
 
@@ -403,6 +422,11 @@ export class AdminPanelComponent implements OnInit {
     this.selectedTabIndex = 1; // Przełącz na zakładkę formularza
     this.editItemId = item.id || null;
     this.initForm(item);
+
+    // Ustaw podgląd istniejącego obrazka
+    if (item.imageUrl) {
+      this.imagePreviewUrl = item.imageUrl;
+    }
   }
 
   // Poprawiona metoda cancelEdit
@@ -410,6 +434,7 @@ export class AdminPanelComponent implements OnInit {
     this.selectedTabIndex = 0; // Wróć do listy
     this.editItemId = null;
     this.selectedFile = null;
+    this.imagePreviewUrl = null; // Czyszczenie podglądu
     this.initForm(); // Reset formularza
   }
 

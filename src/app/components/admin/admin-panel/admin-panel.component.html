@@ -194,7 +194,7 @@
                   <div class="upload-options">
                     <mat-form-field appearance="outline" class="url-input" *ngIf="!selectedFile">
                       <mat-label>URL zdjęcia</mat-label>
-                      <input matInput formControlName="imageUrl" placeholder="https://example.com/image.jpg">
+                      <input matInput formControlName="imageUrl" placeholder="https://example.com/image.jpg" (input)="updateImagePreview()">
                       <mat-error *ngIf="!selectedFile && jewelryForm.get('imageUrl')?.hasError('required')">
                         URL zdjęcia jest wymagany, jeśli nie przesyłasz pliku
                       </mat-error>
@@ -221,6 +221,12 @@
                   </div>
 
                   <input hidden type="file" #fileInput (change)="onFileSelected($event)" accept="image/*">
+
+                  <!-- Podgląd zdjęcia -->
+                  <div class="image-preview" *ngIf="imagePreviewUrl">
+                    <h5>Podgląd:</h5>
+                    <img [src]="imagePreviewUrl" alt="Podgląd zdjęcia" class="preview-image">
+                  </div>
                 </div>
               </div>
 
