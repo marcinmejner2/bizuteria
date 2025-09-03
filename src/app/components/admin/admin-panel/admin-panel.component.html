@@ -218,11 +218,10 @@
 
                 <button type="button" mat-raised-button color="accent" (click)="addProductAndStay()" [disabled]="jewelryForm.invalid || isSubmitting" *ngIf="!editItemId">
                   <mat-icon>add_circle</mat-icon>
-                  Dodaj i zostań
+                  Dodaj
                 </button>
 
-
-                <button type="submit" mat-raised-button color="primary" [disabled]="jewelryForm.invalid || isSubmitting">
+                <button *ngIf="editItemId" type="submit" mat-raised-button color="primary" [disabled]="jewelryForm.invalid || isSubmitting">
                   <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
                   <mat-icon *ngIf="!isSubmitting">{{ editItemId ? 'save' : 'add' }}</mat-icon>
                   {{ editItemId ? 'Zapisz zmiany' : 'Dodaj produkt' }}

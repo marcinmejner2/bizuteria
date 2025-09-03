@@ -15,7 +15,6 @@
       <a mat-list-item routerLink="/ostatni" (click)="drawer.close()">Ostatni</a>
 
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/login" *ngIf="!(isLoggedIn$ | async)" (click)="drawer.close()">Přihlášení</a>
       <a mat-list-item routerLink="/admin" *ngIf="isLoggedIn$ | async" (click)="drawer.close()">Panel administratora</a>
       <a mat-list-item *ngIf="isLoggedIn$ | async" (click)="logout(); drawer.close()">Wyloguj</a>
     </mat-nav-list>
@@ -74,9 +73,7 @@
           </a>
       </div>
       <span class="toolbar-spacer"></span>
-      <a mat-icon-button routerLink="/login" *ngIf="!(isLoggedIn$ | async)" matTooltip="Logowanie">
-        <mat-icon>login</mat-icon>
-      </a>
+
       <a mat-icon-button routerLink="/admin" *ngIf="isLoggedIn$ | async" matTooltip="Panel administratora">
         <mat-icon>admin_panel_settings</mat-icon>
       </a>
