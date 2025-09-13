@@ -25,12 +25,12 @@
                     <mat-option value="">Wszystkie kategorie</mat-option>
                     <mat-option value="naramek">Náramek</mat-option>
                     <mat-option value="privesek">Přívěsek</mat-option>
-                    <mat-option value="krouzek">Kroužek</mat-option>
+                    <mat-option value="krouzek">Prsten</mat-option>
                     <mat-option value="naramekNaKotnik">Náramek na kotník</mat-option>
                     <mat-option value="klicenka">Klíčenka</mat-option>
                     <mat-option value="nausnice">Náušnice</mat-option>
                     <mat-option value="sadaSperku">Sada šperků</mat-option>
-                    <mat-option value="mobil">Mobil</mat-option>
+                    <mat-option value="mobil">Přívěsek na mobil</mat-option>
                     <mat-option value="ostatni">Ostatni</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -166,7 +166,7 @@
                     <mat-option value="klicenka">Klíčenka</mat-option>
                     <mat-option value="nausnice">Náušnice</mat-option>
                     <mat-option value="sadaSperku">Sada šperků</mat-option>
-                    <mat-option value="mobil">Mobil</mat-option>
+                    <mat-option value="mobil">Telefonický přívěsek</mat-option>
                     <mat-option value="ostatni">Ostatni</mat-option>
                   </mat-select>
                   <mat-error *ngIf="jewelryForm.get('category')?.hasError('required')">
@@ -200,7 +200,7 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <div *ngIf="!editItemId" class="file-upload" [class.has-file]="selectedFile">
+                    <div class="file-upload" [class.has-file]="selectedFile">
                       <button type="button" mat-raised-button color="accent" (click)="fileInput.click()" class="upload-btn">
                         <mat-icon>cloud_upload</mat-icon>
                         {{ selectedFile ? 'Zmień plik' : 'Prześlij plik' }}
