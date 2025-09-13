@@ -28,6 +28,26 @@
 
   <!-- Wrapper dla zawartości wewnętrznej -->
   <div class="category-content-wrapper">
+    <!-- Filtry płci -->
+    <div class="filters-section" *ngIf="!isLoading">
+      <mat-card class="filters-card">
+        <mat-card-content>
+          <div class="filters-header">
+            <h3>Typ:</h3>
+          </div>
+          <div class="sex-filters">
+            <mat-checkbox
+              *ngFor="let option of sexOptions"
+              [checked]="sexFilters[option.value]"
+              (change)="onSexFilterChange(option.value, $event.checked)"
+              class="sex-filter-checkbox">
+              {{ option.label }}
+            </mat-checkbox>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
     <!-- Loading spinner -->
     <div class="loading-container" *ngIf="isLoading">
       <div class="loading-content">
@@ -40,9 +60,9 @@
 
     <!-- Lista produktów -->
     <div class="products-section" *ngIf="!isLoading">
-      <div class="products-container" *ngIf="jewelryItems.length > 0; else noProducts">
+      <div class="products-container" *ngIf="filteredJewelryItems.length > 0; else noProducts">
         <div class="products-grid">
-          <mat-card class="product-card" *ngFor="let item of jewelryItems" [ngClass]="{'out-of-stock': !item.inStock}">
+          <mat-card class="product-card" *ngFor="let item of filteredJewelryItems" [ngClass]="{'out-of-stock': !item.inStock}">
             <!-- Obrazek produktu -->
             <div class="product-image-container">
               <img
@@ -56,7 +76,7 @@
 
               <!-- Badge dostępności -->
               <div *ngIf="!item.inStock" class="stock-badge" [ngClass]="item.inStock ? 'in-stock' : 'out-of-stock'">
-                {{ item.inStock ? '' : 'Niedostępny' }}
+                {{ item.inStock ? '' : 'Nepřístupný' }}
               </div>
             </div>
 

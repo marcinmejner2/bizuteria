@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { JewelryService } from '../../../services/jewelry.service';
-import { Jewelry } from '../../../models/jewelry';
+import { Jewelry, SexEnum } from '../../../models/jewelry';
 
 @Component({
   selector: 'app-admin-panel',
@@ -26,6 +26,12 @@ export class AdminPanelComponent implements OnInit {
   // Nowe zmienne do filtrowania
   priceRange: {min: number | null, max: number | null} = {min: null, max: null};
   availabilityFilter: string = 'all'; // 'all', 'available', 'unavailable'
+
+  // Dodaj opcje płci
+  sexOptions = [
+    { value: SexEnum.FEMALE, label: 'Damska' },
+    { value: SexEnum.MALE, label: 'Męska' }
+  ];
 
   constructor(
     private jewelryService: JewelryService,
@@ -66,6 +72,7 @@ export class AdminPanelComponent implements OnInit {
       price: [item?.price || '', [Validators.required, Validators.min(0.01)]],
       imageUrl: [item?.imageUrl || '', urlValidators],
       category: [item?.category || '', Validators.required],
+      sex: [item?.sex || [SexEnum.FEMALE]], // Domyślnie "Damska"
       inStock: [item?.inStock !== undefined ? item.inStock : true]
     });
   }
@@ -388,6 +395,7 @@ export class AdminPanelComponent implements OnInit {
       price: '',
       imageUrl: '',
       category: '',
+      sex: [SexEnum.FEMALE], // Domyślnie "Damska"
       inStock: true
     });
 
@@ -415,6 +423,26 @@ export class AdminPanelComponent implements OnInit {
       'earrings': 'Kolczyki'
     };
     return categoryNames[category] || category;
+  }
+
+  // Metoda do obsługi zmian w checkboxach płci
+  onSexChange(sexValue: SexEnum, checked: boolean): void {
+    const currentSex = this.jewelryForm.get('sex')?.value || [];
+
+    if (checked) {
+      // Dodaj płeć do listy, jeśli nie jest już tam
+      if (!currentSex.includes(sexValue)) {
+        this.jewelryForm.patchValue({
+          sex: [...currentSex, sexValue]
+        });
+      }
+    } else {
+      // Usuń płeć z listy
+      const updatedSex = currentSex.filter((sex: SexEnum) => sex !== sexValue);
+      this.jewelryForm.patchValue({
+        sex: updatedSex
+      });
+    }
   }
 
   // Poprawiona metoda editItem z przełączaniem zakładek

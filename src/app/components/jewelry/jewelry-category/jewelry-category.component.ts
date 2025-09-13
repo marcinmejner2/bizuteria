@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JewelryService } from '../../../services/jewelry.service';
 import { AuthService } from '../../../services/auth.service';
-import { Jewelry } from '../../../models/jewelry';
+import { Jewelry, SexEnum } from '../../../models/jewelry';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class JewelryCategoryComponent implements OnInit, OnDestroy {
   jewelryItems: Jewelry[] = [];
+  filteredJewelryItems: Jewelry[] = [];
   category: string = '';
   categoryDisplayName: string = '';
   isLoggedIn$: Observable<boolean>;
@@ -25,6 +26,18 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
   showImageModal: boolean = false;
   modalImageUrl: string = '';
   modalImageAlt: string = '';
+
+  // Filtry płci
+  sexFilters = {
+    [SexEnum.FEMALE]: true, // Domyślnie zaznaczone
+    [SexEnum.MALE]: true    // Domyślnie zaznaczone
+  };
+
+  // Opcje płci do wyświetlenia
+  sexOptions = [
+    { value: SexEnum.FEMALE, label: 'Dámské' },
+    { value: SexEnum.MALE, label: 'Pánské' }
+  ];
 
   // Mapowanie kategorii na polskie nazwy i opisy
   private categoryConfig: { [key: string]: { name: string; description: string; icon: string } } = {
@@ -126,7 +139,6 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
       'sadaSperku': 'sadaSperku',
       'mobil': 'mobil',
       'ostatni': 'ostatni',
-
     };
 
     const dbCategory = categoryMapping[this.category];
@@ -143,12 +155,15 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
               numeric: true,
               sensitivity: 'base'
             }));
+            // Zastosuj filtry płci
+            this.applyFilters();
             // Zakończ ładowanie
             this.isLoading = false;
           },
           error: (error) => {
             console.error('Błąd podczas ładowania produktów:', error);
             this.jewelryItems = [];
+            this.filteredJewelryItems = [];
             // Zakończ ładowanie nawet w przypadku błędu
             this.isLoading = false;
           }
@@ -156,9 +171,41 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
     } else {
       console.error('Unknown category:', this.category);
       this.jewelryItems = [];
+      this.filteredJewelryItems = [];
       // Zakończ ładowanie
       this.isLoading = false;
     }
+  }
+
+  // Nowa metoda do filtrowania według płci
+  applyFilters(): void {
+    const selectedSexes = Object.keys(this.sexFilters)
+      .filter(sex => this.sexFilters[sex as SexEnum])
+      .map(sex => sex as SexEnum);
+
+    this.filteredJewelryItems = this.jewelryItems.filter(item => {
+      // Jeśli przedmiot nie ma zdefiniowanej płci lub ma pustą tablicę płci,
+      // traktuj go jako pasujący do wszystkich płci
+      if (!item.sex || item.sex.length === 0) {
+        return true;
+      }
+
+      // Sprawdź czy którakolwiek z płci przedmiotu jest zaznaczona w filtrach
+      return item.sex.some(itemSex => selectedSexes.includes(itemSex));
+    });
+  }
+
+  // Metoda do obsługi zmian w filtrach płci
+  onSexFilterChange(sex: SexEnum, checked: boolean): void {
+    this.sexFilters[sex] = checked;
+    this.applyFilters();
+  }
+
+  // Metoda do resetowania filtrów
+  clearFilters(): void {
+    this.sexFilters[SexEnum.FEMALE] = true;
+    this.sexFilters[SexEnum.MALE] = true;
+    this.applyFilters();
   }
 
   getCategoryConfig() {

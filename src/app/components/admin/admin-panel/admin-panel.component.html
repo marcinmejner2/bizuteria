@@ -187,6 +187,21 @@
                 </mat-form-field>
               </div>
 
+              <!-- Nowy wiersz z płcią -->
+              <div class="form-row">
+                <div class="sex-selection">
+                  <h4>Płeć</h4>
+                  <div class="sex-checkboxes">
+                    <mat-checkbox
+                      *ngFor="let option of sexOptions"
+                      [checked]="jewelryForm.get('sex')?.value?.includes(option.value)"
+                      (change)="onSexChange(option.value, $event.checked)">
+                      {{ option.label }}
+                    </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+
               <div class="form-row">
                 <div class="image-upload-section">
                   <h4>Zdjęcie produktu</h4>
