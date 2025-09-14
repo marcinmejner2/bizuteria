@@ -12,7 +12,7 @@
       <a mat-list-item routerLink="/nausnice" (click)="drawer.close()">Náušnice</a>
       <a mat-list-item routerLink="/sadaSperku" (click)="drawer.close()">Sada šperků</a>
       <a mat-list-item routerLink="/mobil" (click)="drawer.close()">Přívěsek na mobil</a>
-      <a mat-list-item routerLink="/ostatni" (click)="drawer.close()">Ostatni</a>
+      <a mat-list-item routerLink="/ostatni" (click)="drawer.close()">Vánoční dekorace i ostatní</a>
 
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="/admin" *ngIf="isLoggedIn$ | async" (click)="drawer.close()">Panel administratora</a>
@@ -69,7 +69,7 @@
           </a>
           <a mat-button routerLink="/ostatni" routerLinkActive="active-link">
 
-              <span>Ostatni</span> <!--Inne-->
+              <span>Vánoční dekorace i ostatní</span> <!--Inne-->
           </a>
       </div>
       <span class="toolbar-spacer"></span>

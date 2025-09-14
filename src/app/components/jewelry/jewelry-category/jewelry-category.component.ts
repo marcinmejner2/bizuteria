@@ -83,7 +83,7 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
       icon: 'diamond'
     },
     'ostatni': {
-      name: 'Ostatni',
+      name: 'Vánoční dekorace i ostatní',
       description: '',
       icon: 'diamond'
     },
@@ -185,9 +185,9 @@ export class JewelryCategoryComponent implements OnInit, OnDestroy {
 
     this.filteredJewelryItems = this.jewelryItems.filter(item => {
       // Jeśli przedmiot nie ma zdefiniowanej płci lub ma pustą tablicę płci,
-      // traktuj go jako pasujący do wszystkich płci
+      // traktuj go jako damski (FEMALE)
       if (!item.sex || item.sex.length === 0) {
-        return true;
+        return selectedSexes.includes(SexEnum.FEMALE);
       }
 
       // Sprawdź czy którakolwiek z płci przedmiotu jest zaznaczona w filtrach

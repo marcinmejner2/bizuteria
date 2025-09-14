@@ -72,7 +72,7 @@ export class AdminPanelComponent implements OnInit {
       price: [item?.price || '', [Validators.required, Validators.min(0.01)]],
       imageUrl: [item?.imageUrl || '', urlValidators],
       category: [item?.category || '', Validators.required],
-      sex: [item?.sex || [SexEnum.FEMALE]], // Domyślnie "Damska"
+      sex: [item?.sex || []], // Usuń domyślną wartość przy edycji, użyj pustej tablicy jeśli brak danych
       inStock: [item?.inStock !== undefined ? item.inStock : true]
     });
   }
